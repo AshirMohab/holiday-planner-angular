@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "holiday-planner-angular"
+  },
+  "targets": {
+    "holiday-planner-angular": {
+      "hosting": {
+        "holiday-planner-angular": [
+          "holiday-planner-angular"
+        ]
+      }
+    }
+  }
+}

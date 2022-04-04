@@ -4,4 +4,9 @@ export default interface ItineraryItem {
   startTime: Date;
   endTime: Date;
   costEstimate: number;
+  startLocationLat: string | null;
+  startLocationLong: string | null;
+  endLocationLat: string | null;
+  endLocationLong: string | null;
+  notes: string | null;
 }

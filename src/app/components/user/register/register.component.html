@@ -1,1 +1,196 @@
-<p>register works!</p>
+<div
+  class="grid grid-cols-1 w-[950px] bg-red-100 h-fit rounded-lg divide-x-[1px] divide-dark-blue place-items-center m-60"
+>
+  <div class="p-5">
+    <h1 class="text-dark-blue text-center text-xl gap-2">Sign Up</h1>
+    <form
+      nz-form
+      class="p-7"
+      [formGroup]="registerUserForm"
+      (submit)="registerNewUser()"
+    >
+      <nz-form-item>
+        <nz-form-control class="mr-3 py-2">
+          <p class="text-base">Name:</p>
+          <nz-input-group>
+            <input
+              nz-input
+              formControlName="name"
+              type="text"
+              placeholder="Bob"
+              required
+              (keyup)="
+                registerUserForm.value.name
+                  ? registerUserForm.get('email')?.enable()
+                  : registerUserForm.get('email')?.disable()
+              "
+            />
+          </nz-input-group>
+          <p
+            *ngIf="
+              this.registerUserForm.get('email')?.disabled &&
+              this.registerUserForm.get('name')?.touched
+            "
+            class="text-red-500"
+          >
+            Name is required
+          </p>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control class="mr-3 py-2">
+          <p class="text-base">Surname:</p>
+          <nz-input-group>
+            <input
+              nz-input
+              formControlName="surname"
+              type="text"
+              placeholder="Ross"
+              required
+              (keyup)="
+                registerUserForm.value.surname
+                  ? registerUserForm.get('email')?.enable()
+                  : registerUserForm.get('email')?.disable()
+              "
+            />
+          </nz-input-group>
+          <p
+            *ngIf="
+              this.registerUserForm.get('email')?.disabled &&
+              this.registerUserForm.get('surname')?.touched
+            "
+            class="text-red-500"
+          >
+            Surname is required
+          </p>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control nzSpan="40">
+          <p class="text-base py-2">Email:</p>
+          <nz-input-group nzPrefixIcon="mail">
+            <input
+              nz-input
+              formControlName="email"
+              type="email"
+              placeholder="bob.ross@icanpaint.co.za"
+              (keyup)="
+                verifyEmail()
+                  ? registerUserForm.get('password')?.enable()
+                  : registerUserForm.get('password')?.disable()
+              "
+            />
+          </nz-input-group>
+          <p
+            *ngIf="
+              registerUserForm.get('email')?.touched &&
+              registerUserForm.get('email')?.enabled &&
+              registerUserForm.get('password')?.disabled
+            "
+            class="text-red-500"
+          >
+            Invalid Email
+          </p>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzSpan="40">
+          <p class="text-base py-2">Password:</p>
+          <nz-input-group nzPrefixIcon="lock">
+            <input
+              nz-input
+              formControlName="password"
+              placeholder="password"
+              [type]="passwordVisible ? 'text' : 'password'"
+              (keyup)="
+                verifyPassword()
+                  ? registerUserForm.get('confirmPassword')?.enable()
+                  : registerUserForm.get('confirmPassword')?.disable()
+              "
+            />
+            <div
+              role="button"
+              class="{{
+                registerUserForm.get('password')?.disabled
+                  ? 'cursor-not-allowed'
+                  : 'hover:text-blue-500 duration-300 bg-white'
+              }} flex items-center border-[1px] px-2 py-1 text-dark-blue"
+              (click)="
+                registerUserForm.get('password')?.disabled
+                  ? ''
+                  : (passwordVisible = !passwordVisible)
+              "
+            >
+              <i
+                [class]="
+                  passwordVisible ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
+                "
+              ></i>
+            </div>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzSpan="30">
+          <p class="text-base py-2">Confirm Password:</p>
+          <nz-input-group nzPrefixIcon="lock">
+            <input
+              nz-input
+              formControlName="confirmPassword"
+              placeholder="password"
+              [type]="confirmPasswordVisible ? 'text' : 'password'"
+              (keyup)="
+                registerUserForm.value.password ===
+                registerUserForm.value.confirmPassword
+                  ? (passwordsConfirmed = true)
+                  : (passwordsConfirmed = false)
+              "
+            />
+            <div
+              class="{{
+                registerUserForm.get('confirmPassword')?.disabled
+                  ? 'cursor-not-allowed'
+                  : 'hover:text-blue-500 duration-300 bg-white'
+              }} flex items-center border-[1px] px-2 py-1 text-dark-blue"
+              (click)="
+                registerUserForm.get('confirmPassword')?.disabled
+                  ? ''
+                  : (confirmPasswordVisible = !confirmPasswordVisible)
+              "
+            >
+              <i
+                [class]="
+                  confirmPasswordVisible
+                    ? 'fa-solid fa-eye'
+                    : 'fa-solid fa-eye-slash'
+                "
+              ></i>
+            </div>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <button
+        type="submit"
+        [disabled]="!submitRegistration()"
+        class="{{
+          submitRegistration()
+            ? 'bg-dark-blue hover:scale-105 duration-300'
+            : ' bg-blue-100 cursor-not-allowed'
+        }} text-white rounded-md w-full h-10 "
+      >
+        Register
+      </button>
+      <p class="text-sm text-center mt-2">
+        Already have an account?
+        <span
+          class="text-dark-blue hover:text-blue-600 cursor-pointer duration-300"
+          routerLink="/login"
+          >Login</span
+        >
+      </p>
+    </form>
+  </div>
+</div>

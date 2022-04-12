@@ -1,7 +1,16 @@
+// export default interface User {
+//   uid: string;
+//   displayName?: string;
+//   name?: string;
+//   surname?: string;
+//   email?: string;
+//   password?: string;
+// }
+
 export default interface User {
-  name: string;
-  surname: string;
+  uid: string;
   email: string;
-  DOB: Date;
-  age: string;
+  displayName: string;
+  photoURL: string;
+  emailVerified: boolean;
 }

@@ -22,14 +22,14 @@ export class AuthService {
     private ngZone: NgZone
   ) {}
 
-  registerUser(email: string, password: string) {
+  registerUser(email: string, password: string, name: string) {
     this.authorize
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
         if (!!res?.user) {
           const user: User = {
             uid: res.user.uid,
-            displayName: res.user.displayName || '',
+            displayName: name || '',
             email: res.user.email || '',
             photoURL: res.user.photoURL || '',
             emailVerified: res.user.emailVerified,
@@ -67,6 +67,19 @@ export class AuthService {
       })
       .catch((err: Error) => {
         console.error(err.message);
+      });
+  }
+
+  loginUser(email: string, password: string) {
+    this.authorize
+      .signInWithEmailAndPassword(email, password)
+      .then((res) => {
+        this.ngZone.run(() => {
+          this.router.navigate(['my-trips']);
+        });
+      })
+      .catch((err: Error) => {
+        console.error(err);
       });
   }
 

@@ -65,19 +65,8 @@ export class RegisterComponent implements OnInit {
   registerNewUser() {
     const email = this.registerUserForm.value.email;
     const password = this.registerUserForm.value.password;
+    const name = this.registerUserForm.value.name;
 
-    this.authorize.registerUser(email, password);
-    // .then(() => {
-    //   this.errorMessage = '';
-    //   console.log('signed in');
-    // })
-    // .catch((err: Error) => {
-    //   console.log('err');
-    //   this.errorMessage =
-    //     err.message ===
-    //     'FirebaseError: Firebase: Error (auth/email-already-in-use).'
-    //       ? 'The email you have provided already exists'
-    //       : 'error occured while signing you, please try again';
-    // });
+    this.authorize.registerUser(email, password, name);
   }
 }

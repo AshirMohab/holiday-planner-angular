@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "holiday-planner-angular"
+  "defaultProject": "holiday-planner-angular",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

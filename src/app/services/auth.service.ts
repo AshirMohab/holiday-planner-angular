@@ -7,7 +7,7 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 
-import { Observable } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import User from '../models/user';
 import { Router } from '@angular/router';
 
@@ -15,12 +15,24 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
+  users$: Observable<User | null | undefined>;
+
   constructor(
     private authorize: AngularFireAuth,
     private fireStore: AngularFirestore,
     private router: Router,
     private ngZone: NgZone
-  ) {}
+  ) {
+    this.users$ = this.authorize.authState.pipe(
+      switchMap((user) => {
+        if (user) {
+          return this.fireStore.doc<User>(`Users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+        }
+      })
+    );
+  }
 
   registerUser(email: string, password: string, name: string) {
     this.authorize

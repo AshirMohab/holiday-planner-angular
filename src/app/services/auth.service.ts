@@ -77,6 +77,7 @@ export class AuthService {
         this.ngZone.run(() => {
           this.router.navigate(['my-trips']);
         });
+        console.log('User hass been loggeed in:', email);
       })
       .catch((err: Error) => {
         console.error(err);

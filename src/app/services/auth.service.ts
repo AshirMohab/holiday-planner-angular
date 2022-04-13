@@ -48,6 +48,7 @@ export class AuthService {
           };
           // this.createUser(user);
           this.fireStore.collection('Users').add({ ...user });
+          this.router.navigate(['/login']);
         }
       })
       .catch((err: Error) => {
@@ -94,6 +95,11 @@ export class AuthService {
       .catch((err: Error) => {
         console.error(err);
       });
+  }
+
+  logOutUser() {
+    this.authorize.signOut();
+    this.router.navigate(['/home']);
   }
 
   // createUser(user: User) {

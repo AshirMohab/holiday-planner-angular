@@ -31,12 +31,10 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import * as fromUser from './store/user/user.reducer';
-import { UserEffects } from './store/user/user.effects';
+
 import * as fromTrip from './store/trip/trip.reducer';
 import { TripEffects } from './store/trip/trip.effects';
-import * as fromItinerary from './store/itinerary/itinerary.reducer';
-import { ItineraryEffects } from './store/itinerary/itinerary.effects';
+
 registerLocaleData(en);
 
 @NgModule({
@@ -67,11 +65,12 @@ registerLocaleData(en);
     AngularFireAuthModule,
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
-    EffectsModule.forFeature([UserEffects, TripEffects, ItineraryEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
+    EffectsModule.forFeature([TripEffects]),
     StoreModule.forFeature(fromTrip.tripFeatureKey, fromTrip.reducer),
-    StoreModule.forFeature(fromItinerary.itineraryFeatureKey, fromItinerary.reducer),
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, AuthService],
   bootstrap: [AppComponent],

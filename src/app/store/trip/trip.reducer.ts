@@ -1,21 +1,34 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import TripsModel from 'src/app/models/tripsModel';
 import * as TripActions from './trip.actions';
 
 export const tripFeatureKey = 'trip';
 
-export interface State {
-
+export interface TripState {
+  isLoading: boolean;
+  selectedUserTrip: TripsModel | null;
+  userTrips: TripsModel[];
 }
 
-export const initialState: State = {
-
+export const initialState: TripState = {
+  isLoading: false,
+  selectedUserTrip: null,
+  userTrips: [],
 };
 
 export const reducer = createReducer(
   initialState,
 
-  on(TripActions.tripTrips, state => state),
-  on(TripActions.tripTripsSuccess, (state, action) => state),
-  on(TripActions.tripTripsFailure, (state, action) => state),
+  on(TripActions.getUserTrips, (state) => ({ ...state, isLoading: true })),
 
+  on(TripActions.getUserTripsCompleted, (state, { userTrips }) => ({
+    ...state,
+    isLoading: false,
+    userTrips,
+  })),
+
+  on(TripActions.setSelectedUserTrip, (state, { userTrips }) => ({
+    ...state,
+    selectedUserTrip: userTrips,
+  }))
 );

@@ -1,4 +1,5 @@
 export default interface ItineraryItem {
+  tripID: string;
   name: string;
   tag: string;
   startTime: Date;

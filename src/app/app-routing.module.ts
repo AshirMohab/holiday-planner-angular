@@ -16,7 +16,7 @@ const routes: Routes = [
     component: MyTripsComponent,
     children: [{ path: ':id', component: TripComponent }],
   },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
 ];
 

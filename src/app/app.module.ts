@@ -34,6 +34,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import * as fromTrip from './store/trip/trip.reducer';
 import { TripEffects } from './store/trip/trip.effects';
+import { EditDetailsComponent } from './components/user/edit-details/edit-details.component';
 
 registerLocaleData(en);
 
@@ -48,6 +49,7 @@ registerLocaleData(en);
     UserComponent,
     ItineraryComponent,
     NotFoundComponent,
+    EditDetailsComponent,
   ],
   imports: [
     BrowserModule,

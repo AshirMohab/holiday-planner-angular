@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, user } from '@angular/fire/auth';
 import { authInstanceFactory } from '@angular/fire/auth/auth.module';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
@@ -11,12 +11,14 @@ import { Observable, of, switchMap } from 'rxjs';
 import User from '../models/user';
 import { Router } from '@angular/router';
 import { doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { setUpUser } from '../shared/setUp';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  users$: Observable<User | null | undefined>;
+  loginSuccess: boolean = false;
+  defaultUser!: User | null;
 
   constructor(
     private authorize: AngularFireAuth,
@@ -25,17 +27,20 @@ export class AuthService {
     private router: Router,
     private ngZone: NgZone
   ) {
-    this.users$ = this.authorize.authState.pipe(
-      switchMap((user) => {
-        if (user) {
-          return this.angularFireStore
-            .doc<User>(`Users/${user.uid}`)
-            .valueChanges();
-        } else {
-          return of(null);
-        }
-      })
-    );
+    this.authorize.authState.subscribe((user) => {
+      if (user) {
+        this.defaultUser = {
+          ...user,
+          email: user.email || '',
+          photoURL: user.photoURL || '',
+          displayName: user.displayName || '',
+        };
+        localStorage.setItem('user', JSON.stringify(this.defaultUser));
+      } else {
+        localStorage.setItem('user', 'null');
+        this.defaultUser = null;
+      }
+    });
   }
 
   registerUser(email: string, password: string, name: string) {
@@ -60,12 +65,16 @@ export class AuthService {
       });
   }
 
-  private async editUserInfo(user: User, userID: string) {
+  async editUserInfo(user: User, userID: string) {
     await setDoc(doc(this.fireStore, 'Users', userID), {
       name: user.displayName,
       email: user.email,
       photoURl: user.photoURL,
     });
+  }
+
+  loginSuccessful(): boolean {
+    return this.loginSuccess;
   }
 
   // async updateUser(email: string, password: string) {
@@ -95,6 +104,11 @@ export class AuthService {
   //     });
   // }
 
+  get isLoggedIn(): boolean {
+    const user: User = JSON.parse(localStorage.getItem('user')!);
+    return !!user;
+  }
+
   loginUser(email: string, password: string) {
     this.authorize
       .signInWithEmailAndPassword(email, password)
@@ -106,11 +120,14 @@ export class AuthService {
       })
       .catch((err: Error) => {
         console.error(err);
+        this.loginSuccess = false;
       });
   }
 
   logOutUser() {
-    this.authorize.signOut();
-    this.router.navigate(['/home']);
+    return this.authorize.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['/login']);
+    });
   }
 }

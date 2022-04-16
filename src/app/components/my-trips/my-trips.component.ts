@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CurrencyResponse, CurrencyType } from 'src/app/models/currency';
+import TripsModel from 'src/app/models/tripsModel';
 import { CurrencyService } from 'src/app/services/currency.service';
 
 @Component({
@@ -15,10 +16,14 @@ export class MyTripsComponent implements OnInit {
 
   ngOnInit(): void {
     this.currencyResponse$ = this.currency.getCurrency();
-    console.log('Currencies gottne:');
+    console.log('Currencies gotten:');
   }
 
   identifyCurrency(index: number, currency: CurrencyType): string {
     return currency.CurrencyData.code;
+  }
+
+  identifyTrips(index: number, trip: TripsModel): string {
+    return trip.tripID;
   }
 }

@@ -1,4 +1,5 @@
 export default interface ItineraryItem {
+  itinID: string;
   tripID: string;
   name: string;
   tag: string;

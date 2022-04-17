@@ -1,0 +1,23 @@
+.form-item {
+    width: 100%;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.form-button {
+    transition: all 0.3s;
+}
+
+.form-button:hover {
+    background-color: #2a6496;
+}
+
+a.form-link {
+    text-decoration: underline;
+    color: #3b81f6;
+
+}
+a.form-link:hover {
+    color: #2a6496;
+}
+

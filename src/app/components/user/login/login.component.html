@@ -1,21 +1,22 @@
 <div class="md:flex hidden w-screen h-full justify-center py-20">
   <div
-    class="grid grid-cols-1 w-[950px] bg-slate-100 h-fit rounded-lg divide-x-[1px] divide-dark-blue"
+    class="grid grid-cols-1 w-[400px] bg-slate-100 h-fit rounded-lg divide-x-[1px] divide-dark-blue"
   >
     <div class="p-5 gap-4">
-      <h1 class="text-dark-blue text-center text-xl">Login</h1>
+      <h1 class="text-center text-xl">Log into your account</h1>
       <form
         nz-form
         class="py-7"
         [formGroup]="loginUserForm"
         (submit)="loginUser()"
       >
-        <nz-form-item>
-          <nz-form-control nzSpan="40">
-            <p class="text-base">Email:</p>
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="email" class="text-base">Email:</label>
             <nz-input-group nzPrefixIcon="mail">
               <input
                 nz-input
+                id="email"
                 formControlName="email"
                 type="email"
                 placeholder="bob.ross@icanpaint.co.za"
@@ -32,12 +33,13 @@
             </p>
           </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
-          <nz-form-control nzSpan="30">
-            <p class="text-base">Password:</p>
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="password" class="text-base">Password:</label>
             <nz-input-group nzPrefixIcon="lock">
               <input
                 nz-input
+                id="password"
                 formControlName="password"
                 placeholder="password"
                 [type]="passwordVisible ? 'text' : 'password'"
@@ -68,29 +70,17 @@
           </nz-form-control>
         </nz-form-item>
         <button
-          [disabled]="!submitLogin()"
           type="submit"
-          class="{{
-            submitLogin()
-              ? 'bg-blue-500 hover:scale-105 duration-300'
-              : ' bg-blue-100 cursor-not-allowed'
-          }} text-white rounded-md w-full h-10 "
+          class="text-white bg-blue-500 rounded-md w-full h-10 form-button"
+          (click)="loginUser()"
         >
-          Sign In
+          Log in
         </button>
-        <button
-          type="submit"
-          class="bg-blue-300 text-white rounded-md w-full h-10"
-          (click)="logOutUser()"
-        >
-          Logout
-        </button>
+
         <p class="text-sm text-center mt-2">
           Don't have an account?
-          <span
-            class="text-dark-blue hover:text-blue-600 cursor-pointer duration-300"
-            routerLink="/signup"
-            >Sign Up</span
+          <a class="cursor-pointer duration-300 form-link" routerLink="/signup"
+            >Sign up</a
           >
         </p>
       </form>

@@ -45,6 +45,9 @@ export class MyTripsComponent implements OnInit {
 
   getMyTrips() {
     const email = this.user.email;
-    return this.userService.getUserTrips(email);
+
+    const tripsData = this.userService.getUserTrips(email);
+
+    console.log(tripsData);
   }
 }

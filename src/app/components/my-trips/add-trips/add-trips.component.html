@@ -1,61 +1,65 @@
-<div
-  class="grid grid-cols-1 w-[950px] bg-slate-100 h-fit rounded-lg divide-x-[1px] divide-dark-blue place-items-center mx-40 my-20"
->
-  <div class="p-5">
-    <h1 class="text-dark-blue text-center text-xl gap-2">Add Trip</h1>
-    <form nz-form class="p-7" [formGroup]="addTripForm" (submit)="addNewTrip()">
-      <nz-form-item>
-        <nz-form-control class="mr-3 py-2">
-          <p class="text-base">Name of Trip:</p>
-          <nz-input-group>
-            <input
-              nz-input
-              formControlName="tripName"
-              type="text"
-              placeholder="Paris"
-            />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-control class="mr-3 py-2">
-          <p class="text-base">Description</p>
-          <nz-input-group>
-            <input
-              nz-input
-              formControlName="description"
-              type="text"
-              placeholder="This is great"
-            />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-control nzSpan="40">
-          <p class="text-base py-2">Currency:</p>
-          <nz-input-group nzPrefixIcon="dollar-circle">
-            <input
-              nz-input
-              formControlName="currency"
-              type="currency"
-              placeholder="Rands"
-            />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-
-      <button
-        type="submit"
-        class="{{
-          submitTrip()
-            ? 'bg-blue-500 hover:scale-100 duration-200'
-            : ' bg-blue-100 cursor-not-allowed'
-        }} text-white rounded-md w-full h-10 "
+<div class="md:flex hidden w-screen h-full justify-center py-20">
+  <div
+    class="grid grid-cols-1 w-[400px] bg-slate-100 h-fit rounded-lg divide-x-[1px] divide-dark-blue place-items-center mx-40 my-20"
+  >
+    <div class="p-5 gap-4">
+      <h1 class="text-center text-xl">Add Trip</h1>
+      <form
+        nz-form
+        class="py-7"
+        [formGroup]="addTripForm"
+        (submit)="addNewTrip()"
       >
-        Add Trip
-      </button>
-    </form>
+        <nz-form-item class="form-item">
+          <nz-form-control class="">
+            <label for="name" class="text-base">Name of Trip:</label>
+            <nz-input-group>
+              <input
+                nz-input
+                id="name"
+                formControlName="tripName"
+                type="text"
+                placeholder="Paris"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="description" class="text-base">Description</label>
+            <nz-input-group>
+              <input
+                nz-input
+                id="description"
+                formControlName="description"
+                type="text"
+                placeholder="This is great"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="form-item">
+          <nz-form-control class="form-select">
+            <label for="currency" class="text-base py-2">Currency:</label>
+            <select id="currency" formControlName="currency">
+              <option value="">Rand</option>
+              <option value="Dollar">Dollar</option>
+              <option value="Pound">Pound</option>
+              <option value="Euros">Euros</option>
+            </select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <button
+          type="submit"
+          class="text-white bg-blue-500 rounded-md w-full h-10 form-button"
+          (click)="submitTrip()"
+        >
+          Add Trip
+        </button>
+      </form>
+    </div>
   </div>
 </div>

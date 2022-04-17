@@ -28,7 +28,7 @@ export class UserService {
 
   async addUserTrip(trip: TripsModel) {
     const tripCollection = collection(this.fireStore, 'Trips');
-    return await addDoc(tripCollection, trip);
+    return await addDoc(tripCollection, { ...trip });
   }
 
   async deleteUser(userID: string) {
@@ -36,14 +36,18 @@ export class UserService {
     this.notificationService.success('User has been removed', 'true');
   }
 
-  async getUserTrips(userID: string) {
+  async getUserTrips(userEmail: string | null) {
     const tripsQuery = query(
       collection(this.fireStore, 'Trips'),
-      where('userID', '==', userID)
+      where('userEmail', '==', userEmail)
     );
-
+    // const tripID = this.angularFireStore.collection('Trips').doc();
     const tripsData = await getDocs(tripsQuery);
-    return tripsData;
+    let trips: TripsModel[] = [];
+    tripsData.forEach((trip) => {
+      trips.push(trip.data() as TripsModel);
+    });
+    return trips;
   }
 
   async removeUserTrip(tripID: string) {

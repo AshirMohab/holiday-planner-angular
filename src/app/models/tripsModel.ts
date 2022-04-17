@@ -1,10 +1,9 @@
 import ItineraryItem from './itineraryItem';
 
 export default interface TripsModel {
-  userID: string;
-  tripID: string;
+  userEmail: string;
   name: string;
   description: string;
-  currency: number;
+  currency: string;
   itinerary: ItineraryItem[];
 }

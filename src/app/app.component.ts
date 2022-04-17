@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';
 
 export interface NavLink {
   routerLink: string;
@@ -42,5 +43,11 @@ export class AppComponent {
 
   identifyLinks(index: number, navLink: NavLink) {
     return navLink.routerLink;
+  }
+
+  constructor(public authorise: AuthService) {}
+
+  signOut() {
+    this.authorise.logOutUser();
   }
 }

@@ -115,8 +115,9 @@ export class AuthService {
       .then((res) => {
         this.ngZone.run(() => {
           this.router.navigate(['my-trips']);
+          console.log('local storage: ', localStorage.getItem('user'));
         });
-        console.log('User hass been loggeed in:', email);
+        this.loginSuccess = true;
       })
       .catch((err: Error) => {
         console.error(err);

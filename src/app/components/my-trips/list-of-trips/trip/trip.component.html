@@ -1,0 +1,20 @@
+<div
+  class="w-fit h-52 bg-slate-100 rounded-md cursor-pointer p-5 hover:shadow-2xl hover:scale-105 duration-500 px-5"
+  routerLink="/dashboard/add-itenary"
+>
+  <p class="text-base text-dark-blue">
+    {{ trip.name }}
+  </p>
+  <p class="text-base text-dark-blue mt-2">
+    {{ trip.itinerary.length }} Itenaries
+  </p>
+  <div class="flex justify-around mt-5 items-center">
+    <p class="font-mono">
+      {{ trip.description }}
+    </p>
+    <i class="fa-solid fa-right-long mx-10 text-dark-blue"></i>
+    <p class="font-mono">
+      {{ trip.currency }}
+    </p>
+  </div>
+</div>

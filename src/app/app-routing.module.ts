@@ -2,7 +2,7 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ComponentsComponent } from './components/components.component';
 import { MyTripsComponent } from './components/my-trips/my-trips.component';
-import { TripComponent } from './components/my-trips/trip/trip.component';
+import { TripComponent } from './components/my-trips/list-of-trips/trip/trip.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';

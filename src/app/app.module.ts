@@ -12,7 +12,7 @@ import { ComponentsComponent } from './components/components.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import { MyTripsComponent } from './components/my-trips/my-trips.component';
-import { TripComponent } from './components/my-trips/trip/trip.component';
+import { TripComponent } from './components/my-trips/list-of-trips/trip/trip.component';
 import { UserComponent } from './components/user/user.component';
 import { ItineraryComponent } from './components/itinerary/itinerary.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -35,6 +35,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as fromTrip from './store/trip/trip.reducer';
 import { TripEffects } from './store/trip/trip.effects';
 import { EditDetailsComponent } from './components/user/edit-details/edit-details.component';
+import { AddTripsComponent } from './components/my-trips/add-trips/add-trips.component';
+import { ListOfTripsComponent } from './components/my-trips/list-of-trips/list-of-trips.component';
 
 registerLocaleData(en);
 
@@ -50,6 +52,8 @@ registerLocaleData(en);
     ItineraryComponent,
     NotFoundComponent,
     EditDetailsComponent,
+    AddTripsComponent,
+    ListOfTripsComponent,
   ],
   imports: [
     BrowserModule,

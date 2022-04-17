@@ -7,7 +7,17 @@
         >{{ navLink.displayName }}</a
       >
     </li>
+    <li
+      *ngIf="authorise.defaultUser"
+      nz-submenu
+      nzOpen
+      nzTitle="Logout"
+      nzIcon="user"
+    ></li>
   </ul>
+  <li nz-menu-item nzMatchRouter>
+    <button (click)="signOut()" nz-button nzType="primary">Sign Out</button>
+  </li>
 </nav>
 
 <div class="container">

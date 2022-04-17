@@ -13,6 +13,23 @@ export const tripTripsFailure = createAction(
   props<{ error: any }>()
 );
 
+export const addUserTrip = createAction('[Trip] addUserTrip');
+
+export const addUserTripComplete = createAction(
+  '[Trip] addUserTrip',
+  props<{
+    userTrip:
+      | TripsModel
+      | {
+          currency: '';
+          description: '';
+          itinerary: [];
+          name: '';
+          userEmail: '';
+        };
+  }>()
+);
+
 export const getUserTrips = createAction('[Trip] getUserTrips');
 
 export const getUserTripsCompleted = createAction(

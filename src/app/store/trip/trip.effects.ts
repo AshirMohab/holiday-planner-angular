@@ -13,10 +13,16 @@ export class TripEffects {
     return this.actions$.pipe(
       ofType(TripActions.getUserTrips),
       concatMap(() =>
-        /** An EMPTY observable only emits completion. Replace with your own observable API request */
-        EMPTY.pipe(
-          map((data) => TripActions.tripTripsSuccess({ data })),
-          catchError((error) => of(TripActions.tripTripsFailure({ error })))
+        this.tripService.getUserTrips().pipe(
+          map((userTrips) => TripActions.getUserTripsCompleted({ userTrips })),
+          catchError((error) => {
+            this.notificationService.error(
+              `Sorry, couldn't get exhange rates.`,
+              error.toString(),
+              { nzDuration: 0 }
+            );
+            return of(TripActions.getUserTripsCompleted({ userTrips: [] }));
+          })
         )
       )
     );

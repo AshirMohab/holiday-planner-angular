@@ -6,6 +6,7 @@ import {
   deleteDoc,
   doc,
   Firestore,
+  getDoc,
   getDocs,
   query,
   setDoc,
@@ -15,20 +16,32 @@ import TripsModel from '../models/tripsModel';
 import User from '../models/user';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import ItineraryItem from '../models/itineraryItem';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   constructor(
-    private fireStore: Firestore,
     private angularFireStore: AngularFirestore,
+    private fireStore: Firestore,
+    private angularFireAuth: AngularFireAuth,
     private notificationService: NzNotificationService
   ) {}
 
   async addUserTrip(trip: TripsModel) {
-    const tripCollection = collection(this.fireStore, 'Trips');
-    return await addDoc(tripCollection, { ...trip });
+    const user: User = JSON.parse(localStorage.getItem('user')!);
+    this.angularFireStore
+      .collection('Trips')
+      .add({
+        ...trip,
+        userID: await this.angularFireAuth.currentUser.then(
+          (user) => user?.uid
+        ),
+        tripID: this.angularFireStore.createId(),
+      })
+      .then(() => console.log('Trip added'));
   }
 
   async deleteUser(userID: string) {
@@ -36,18 +49,63 @@ export class UserService {
     this.notificationService.success('User has been removed', 'true');
   }
 
-  async getUserTrips(userEmail: string | null) {
-    const tripsQuery = query(
-      collection(this.fireStore, 'Trips'),
-      where('userEmail', '==', userEmail)
+  // async getUserTrips(userID: string | null) {
+  //   const tripsQuery = query(
+  //     collection(this.fireStore, 'Trips'),
+  //     where('userID', '==', userID)
+  //   );
+  //   // const tripID = this.angularFireStore.collection('Trips').doc();
+  //   const tripsData = await getDocs(tripsQuery);
+  //   let trips: TripsModel[] = [];
+  //   tripsData.forEach((trip) => {
+  //     trips.push(trip.data() as TripsModel);
+  //     console.log(trip);
+  //   });
+  //   return trips;
+  // }
+
+  getUserTrips(): Observable<TripsModel[]> {
+    const userID = this.angularFireAuth.currentUser
+      .then((user) => user?.uid)
+      .then((res) => res?.toString);
+    const tripsCollection = this.angularFireStore.collection<TripsModel>(
+      'Trips',
+      (ref) => ref.where('userID', '==', userID)
     );
-    // const tripID = this.angularFireStore.collection('Trips').doc();
-    const tripsData = await getDocs(tripsQuery);
-    let trips: TripsModel[] = [];
-    tripsData.forEach((trip) => {
-      trips.push(trip.data() as TripsModel);
+
+    const userTrips$ = tripsCollection.valueChanges();
+
+    return userTrips$;
+  }
+
+  async editUserTrip(tripID: string, trip: TripsModel) {
+    const tripEdit = this.angularFireStore.collection('Trips', (ref) =>
+      ref.where('tripID', '==', tripID)
+    );
+
+    tripEdit.snapshotChanges().subscribe((res) => {
+      let id = res[0].payload.doc.id;
+
+      this.angularFireStore
+        .collection('Trips')
+        .doc(id)
+        .update({ ...trip });
     });
-    return trips;
+    console.log('Trip has been updated');
+  }
+
+  getUserTrip(tripID: string): Observable<TripsModel[]> {
+    const userID = this.angularFireAuth.currentUser
+      .then((user) => user?.uid)
+      .then((res) => res?.toString);
+    const tripsCollection = this.angularFireStore.collection<TripsModel>(
+      'Trips',
+      (ref) => ref.where('tripID', '==', tripID)
+    );
+
+    const userTrip$ = tripsCollection.valueChanges();
+
+    return userTrip$;
   }
 
   async removeUserTrip(tripID: string) {

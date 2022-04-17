@@ -15,13 +15,11 @@ import { TripState } from 'src/app/store/trip/trip.reducer';
 })
 export class MyTripsComponent implements OnInit {
   currencyResponse$!: Observable<CurrencyResponse>;
-  myTripsResponse$!: Observable<TripsModel>;
+  myTripsResponse$!: Observable<TripsModel[]>;
   user: User = JSON.parse(localStorage.getItem('user')!);
 
   isAddingTrip: boolean = false;
   addingTrip: boolean = false;
-
-  trips = this.getMyTrips();
 
   constructor(
     private currency: CurrencyService,
@@ -31,8 +29,7 @@ export class MyTripsComponent implements OnInit {
 
   ngOnInit(): void {
     this.currencyResponse$ = this.currency.getCurrency();
-
-    console.log(this.trips);
+    this.myTripsResponse$ = this.userService.getUserTrips();
   }
 
   identifyCurrency(index: number, currency: CurrencyType): string {
@@ -46,8 +43,20 @@ export class MyTripsComponent implements OnInit {
   getMyTrips() {
     const email = this.user.email;
 
-    const tripsData = this.userService.getUserTrips(email);
+    const tripsData = this.userService.getUserTrips();
 
     console.log(tripsData);
+  }
+
+  updateTrip() {
+    const newTrip: TripsModel = {
+      name: 'Rob',
+      userEmail: 'ashir.mohabir@gmail.com',
+      description: 'hsdjvadjvajd',
+      currency: 'Rand',
+      itinerary: [],
+    };
+
+    this.userService.editUserTrip('qLihIx3dS1jJu84W4OWx', newTrip);
   }
 }

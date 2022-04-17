@@ -52,5 +52,6 @@ export class AddTripsComponent implements OnInit {
       itinerary: [],
     };
     this.userTrips.addUserTrip(tripData);
+    console.log('Trip has been added');
   }
 }

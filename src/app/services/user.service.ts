@@ -17,16 +17,11 @@ export class UserService {
   ) {}
 
   async addUserTrip(trip: TripsModel) {
-    this.angularFireStore
-      .collection('Trips')
-      .add({
-        ...trip,
-        userID: await this.angularFireAuth.currentUser.then(
-          (user) => user?.uid
-        ),
-        tripID: this.angularFireStore.createId(),
-      })
-      .then(() => console.log('Trip added'));
+    this.angularFireStore.collection('Trips').add({
+      ...trip,
+      userID: await this.angularFireAuth.currentUser.then((user) => user?.uid),
+      tripID: this.angularFireStore.createId(),
+    });
   }
 
   async deleteUser(userID: string) {

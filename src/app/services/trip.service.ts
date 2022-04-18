@@ -19,10 +19,6 @@ export class TripService {
   ) {}
 
   getUserTrips(): Observable<TripsModel[]> {
-    const userID = this.angularFireAuth.currentUser
-      .then((user) => user?.uid)
-      .then((res) => res?.toString);
-    console.log(userID);
     const tripsCollection = this.angularFireStore.collection<TripsModel>(
       'Trips'
       // (ref) => ref.where('uid', '==', userID)
@@ -57,7 +53,6 @@ export class TripService {
           .update({ ...trip });
       }
     });
-    console.log('Trip has been updated');
     return tripEdit.valueChanges();
   }
 
@@ -67,13 +62,10 @@ export class TripService {
   }
 
   async addTripItinerary(itinerary: ItineraryItem) {
-    this.angularFireStore
-      .collection('Itinerary')
-      .add({
-        ...itinerary,
-        tripID: this.angularFireStore.createId(),
-      })
-      .then(() => console.log('Itinerary item added'));
+    this.angularFireStore.collection('Itinerary').add({
+      ...itinerary,
+      tripID: this.angularFireStore.createId(),
+    });
   }
 
   async editItinerary(itinerary: ItineraryItem, itineraryID: string) {

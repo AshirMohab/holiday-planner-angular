@@ -45,7 +45,6 @@ export class EditTripsComponent implements OnInit {
   }
 
   updateTrip() {
-    console.log(this.selectedTrip);
     const newTrip: TripsModel = {
       tripID: this.selectedTrip?.tripID,
       name: this.editTripForm.value.tripName,

@@ -1,4 +1,4 @@
-<nav class="navbar" role="banner">
+<nav class="navbar" role="banner" *ngIf="authorise.defaultUser">
   <ul>
     <li *ngFor="let navLink of navLinks; trackBy: identifyLinks">
       <a

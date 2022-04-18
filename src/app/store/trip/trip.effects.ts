@@ -6,6 +6,7 @@ import { Observable, EMPTY, of } from 'rxjs';
 import * as TripActions from './trip.actions';
 import { UserService } from 'src/app/services/user.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { TripService } from 'src/app/services/trip.service';
 
 @Injectable()
 export class TripEffects {
@@ -28,9 +29,28 @@ export class TripEffects {
     );
   });
 
+  tripUpdate$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TripActions.updateTrip),
+      concatMap(({ trip }) =>
+        this.tripService.editUserTrip(trip).pipe(
+          map(() => TripActions.getUserTrips()),
+          catchError((error) => {
+            this.notificationService.error(
+              `Sorry, couldn't update trip.`,
+              error.toString(),
+              { nzDuration: 0 }
+            );
+            return EMPTY;
+          })
+        )
+      )
+    );
+  });
+
   constructor(
     private actions$: Actions,
-    private tripService: UserService,
+    private tripService: TripService,
     private notificationService: NzNotificationService
   ) {}
 }

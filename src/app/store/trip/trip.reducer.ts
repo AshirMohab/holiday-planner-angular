@@ -8,12 +8,12 @@ export interface TripState {
   isLoading: boolean;
   selectedUserTrip: TripsModel;
   userTrips: TripsModel[];
-  userTrip: TripsModel;
 }
 
 export const initialState: TripState = {
   isLoading: false,
   selectedUserTrip: {
+    tripID: '',
     currency: '',
     description: '',
     itinerary: [],
@@ -21,25 +21,10 @@ export const initialState: TripState = {
     userEmail: '',
   },
   userTrips: [],
-
-  userTrip: {
-    currency: '',
-    description: '',
-    itinerary: [],
-    name: '',
-    userEmail: '',
-  },
 };
 
 export const reducer = createReducer(
   initialState,
-
-  on(TripActions.addUserTrip, (state) => ({ ...state })),
-
-  on(TripActions.addUserTripComplete, (state, { userTrip }) => ({
-    ...state,
-    userTrip,
-  })),
 
   on(TripActions.getUserTrips, (state) => ({ ...state, isLoading: true })),
 
@@ -49,8 +34,8 @@ export const reducer = createReducer(
     userTrips,
   })),
 
-  on(TripActions.setSelectedUserTrip, (state, { userTrips }) => ({
+  on(TripActions.setSelectedUserTrip, (state, { selectedUserTrip }) => ({
     ...state,
-    selectedUserTrip: userTrips,
+    selectedUserTrip,
   }))
 );

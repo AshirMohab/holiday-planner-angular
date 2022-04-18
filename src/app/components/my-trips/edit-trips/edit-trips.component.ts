@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import TripsModel from 'src/app/models/tripsModel';
 import { UserService } from 'src/app/services/user.service';
+import { updateTrip } from 'src/app/store/trip/trip.actions';
+import { TripState } from 'src/app/store/trip/trip.reducer';
 
 @Component({
   selector: 'app-edit-trips',
@@ -10,10 +13,12 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class EditTripsComponent implements OnInit {
   editTripForm!: FormGroup;
+  @Input() selectedTrip!: TripsModel;
 
   constructor(
     private userService: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private tripStore: Store<TripState>
   ) {}
 
   ngOnInit(): void {
@@ -40,14 +45,16 @@ export class EditTripsComponent implements OnInit {
   }
 
   updateTrip() {
+    console.log(this.selectedTrip);
     const newTrip: TripsModel = {
+      tripID: this.selectedTrip?.tripID,
       name: this.editTripForm.value.tripName,
       description: this.editTripForm.value.description,
       currency: this.editTripForm.value.currency,
       userEmail: this.editTripForm.value.email,
-      itinerary: [],
+      itinerary: this.selectedTrip.itinerary,
     };
 
-    this.userService.editUserTrip('apWX8cZ5Uy9sJGfseooM', newTrip);
+    this.tripStore.dispatch(updateTrip({ trip: newTrip }));
   }
 }

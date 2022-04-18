@@ -23,10 +23,13 @@ import * as TripSelectors from 'src/app/store/trip/trip.selectors';
 export class MyTripsComponent implements OnInit {
   currencyResponse$!: Observable<CurrencyResponse>;
   myTripsResponse$!: Observable<TripsModel[]>;
+  selectedTrip$!: Observable<TripsModel>;
   user: User = JSON.parse(localStorage.getItem('user')!);
 
   isAddingTrip: boolean = false;
   addingTrip: boolean = false;
+  isShowingTrips: boolean = true;
+  isEditTrips: boolean = false;
 
   constructor(
     private currency: CurrencyService,
@@ -40,6 +43,9 @@ export class MyTripsComponent implements OnInit {
     this.myTripsResponse$ = this.stateStore.pipe(
       select(TripSelectors.selectUserTrips)
     );
+    this.selectedTrip$ = this.stateStore.pipe(
+      select(TripSelectors.selectSelectedUserTrip)
+    );
   }
 
   identifyCurrency(index: number, currency: CurrencyType): string {
@@ -48,5 +54,11 @@ export class MyTripsComponent implements OnInit {
 
   identifyTrips(index: number, trip: TripsModel): string {
     return trip.userEmail;
+  }
+
+  selectUserTrip(selectedUserTrip: TripsModel) {
+    this.stateStore.dispatch(
+      TripActions.setSelectedUserTrip({ selectedUserTrip })
+    );
   }
 }

@@ -6,10 +6,10 @@ import { TripComponent } from './components/my-trips/list-of-trips/trip/trip.com
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
+import { SignInGuardGuard } from './guards/sign-in-guard.guard';
 
 const routes: Routes = [
-  { path: 'home', component: ComponentsComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [SignInGuardGuard] },
   { path: 'register', component: RegisterComponent },
   {
     path: 'my-trips',

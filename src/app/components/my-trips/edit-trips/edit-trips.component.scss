@@ -1,0 +1,33 @@
+.form-item {
+    width: 100%;
+    display: block;
+    margin-bottom: 15px;
+}
+.form-select {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-select select {
+    padding: 4px 11px;
+    border: 1px solid #e4e7e9;
+}
+
+.form-button {
+    transition: all 0.3s;
+}
+
+
+.form-button:hover {
+    background-color: #2a6496;
+}
+
+a.edit-trip {
+    text-decoration: underline;
+    color: #3b81f6;
+
+}
+a.edit-trip:hover {
+    color: #2a6496;
+}
+

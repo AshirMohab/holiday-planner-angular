@@ -23,7 +23,6 @@ export class AddTripsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    console.log(this.user);
   }
 
   initForm() {

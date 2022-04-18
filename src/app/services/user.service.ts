@@ -31,7 +31,6 @@ export class UserService {
   ) {}
 
   async addUserTrip(trip: TripsModel) {
-    const user: User = JSON.parse(localStorage.getItem('user')!);
     this.angularFireStore
       .collection('Trips')
       .add({
@@ -49,28 +48,14 @@ export class UserService {
     this.notificationService.success('User has been removed', 'true');
   }
 
-  // async getUserTrips(userID: string | null) {
-  //   const tripsQuery = query(
-  //     collection(this.fireStore, 'Trips'),
-  //     where('userID', '==', userID)
-  //   );
-  //   // const tripID = this.angularFireStore.collection('Trips').doc();
-  //   const tripsData = await getDocs(tripsQuery);
-  //   let trips: TripsModel[] = [];
-  //   tripsData.forEach((trip) => {
-  //     trips.push(trip.data() as TripsModel);
-  //     console.log(trip);
-  //   });
-  //   return trips;
-  // }
-
   getUserTrips(): Observable<TripsModel[]> {
     const userID = this.angularFireAuth.currentUser
       .then((user) => user?.uid)
       .then((res) => res?.toString);
+    console.log(userID);
     const tripsCollection = this.angularFireStore.collection<TripsModel>(
-      'Trips',
-      (ref) => ref.where('userID', '==', userID)
+      'Trips'
+      // (ref) => ref.where('uid', '==', userID)
     );
 
     const userTrips$ = tripsCollection.valueChanges();
@@ -84,17 +69,19 @@ export class UserService {
     );
 
     tripEdit.snapshotChanges().subscribe((res) => {
-      let id = res[0].payload.doc.id;
+      if (!!res) {
+        let id = res[0].payload.doc.id;
 
-      this.angularFireStore
-        .collection('Trips')
-        .doc(id)
-        .update({ ...trip });
+        this.angularFireStore
+          .collection('Trips')
+          .doc(id)
+          .update({ ...trip });
+      }
     });
     console.log('Trip has been updated');
   }
 
-  getUserTrip(tripID: string): Observable<TripsModel[]> {
+  getSingleUserTrip(tripID: string): Observable<TripsModel[]> {
     const userID = this.angularFireAuth.currentUser
       .then((user) => user?.uid)
       .then((res) => res?.toString);
@@ -114,8 +101,13 @@ export class UserService {
   }
 
   async addTripItinerary(itinerary: ItineraryItem) {
-    const itineraryCollection = collection(this.fireStore, 'Itinerary');
-    return await addDoc(itineraryCollection, itinerary);
+    this.angularFireStore
+      .collection('Itinerary')
+      .add({
+        ...itinerary,
+        tripID: this.angularFireStore.createId(),
+      })
+      .then(() => console.log('Itinerary item added'));
   }
 
   async getTripItinerary(tripID: string) {
@@ -129,11 +121,10 @@ export class UserService {
 
   async editItinerary(itinerary: ItineraryItem, itineraryID: string) {
     await setDoc(doc(this.fireStore, 'Itinerary', itineraryID), {
-      tripID: itinerary.tripID,
       name: itinerary.name,
       tag: itinerary.tag,
-      startTime: itinerary.startTime,
-      endTime: itinerary.endTime,
+      startDate: itinerary.startDate,
+      endDate: itinerary.endDate,
       costEstimate: itinerary.costEstimate,
       startLocationLat: itinerary.startLocationLat,
       startLocationLong: itinerary.startLocationLong,

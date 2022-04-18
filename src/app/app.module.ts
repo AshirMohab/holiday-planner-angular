@@ -37,6 +37,12 @@ import { TripEffects } from './store/trip/trip.effects';
 import { EditDetailsComponent } from './components/user/edit-details/edit-details.component';
 import { AddTripsComponent } from './components/my-trips/add-trips/add-trips.component';
 import { ListOfTripsComponent } from './components/my-trips/list-of-trips/list-of-trips.component';
+import { TripPipePipe } from './pipes/trip-pipe.pipe';
+import { ItineraryPipePipe } from './pipes/itinerary-pipe.pipe';
+import { EditTripsComponent } from './components/my-trips/edit-trips/edit-trips.component';
+import { CalanderComponent } from './components/itinerary/calander/calander.component';
+import { MyItinerariesComponent } from './components/itinerary/my-itineraries/my-itineraries.component';
+import { AddItineraryComponent } from './components/itinerary/add-itinerary/add-itinerary.component';
 
 registerLocaleData(en);
 
@@ -54,6 +60,12 @@ registerLocaleData(en);
     EditDetailsComponent,
     AddTripsComponent,
     ListOfTripsComponent,
+    TripPipePipe,
+    ItineraryPipePipe,
+    EditTripsComponent,
+    CalanderComponent,
+    MyItinerariesComponent,
+    AddItineraryComponent,
   ],
   imports: [
     BrowserModule,

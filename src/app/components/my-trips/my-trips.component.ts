@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '@angular/fire/auth';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CurrencyResponse, CurrencyType } from 'src/app/models/currency';
 import TripsModel from 'src/app/models/tripsModel';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { UserService } from 'src/app/services/user.service';
+import {
+  getUserTripsCompleted,
+  setSelectedUserTrip,
+} from 'src/app/store/trip/trip.actions';
 import { TripState } from 'src/app/store/trip/trip.reducer';
+
+import * as TripActions from 'src/app/store/trip/trip.actions';
+import * as TripSelectors from 'src/app/store/trip/trip.selectors';
 
 @Component({
   selector: 'app-my-trips',
@@ -28,8 +35,11 @@ export class MyTripsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currencyResponse$ = this.currency.getCurrency();
-    this.myTripsResponse$ = this.userService.getUserTrips();
+    // this.currencyResponse$ = this.currency.getCurrency();
+    this.stateStore.dispatch(TripActions.getUserTrips());
+    this.myTripsResponse$ = this.stateStore.pipe(
+      select(TripSelectors.selectUserTrips)
+    );
   }
 
   identifyCurrency(index: number, currency: CurrencyType): string {
@@ -38,25 +48,5 @@ export class MyTripsComponent implements OnInit {
 
   identifyTrips(index: number, trip: TripsModel): string {
     return trip.userEmail;
-  }
-
-  getMyTrips() {
-    const email = this.user.email;
-
-    const tripsData = this.userService.getUserTrips();
-
-    console.log(tripsData);
-  }
-
-  updateTrip() {
-    const newTrip: TripsModel = {
-      name: 'Rob',
-      userEmail: 'ashir.mohabir@gmail.com',
-      description: 'hsdjvadjvajd',
-      currency: 'Rand',
-      itinerary: [],
-    };
-
-    this.userService.editUserTrip('qLihIx3dS1jJu84W4OWx', newTrip);
   }
 }

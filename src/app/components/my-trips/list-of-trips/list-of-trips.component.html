@@ -2,7 +2,7 @@
   *ngIf="trips?.length"
   class="shadow-sm rounded-md border-[1px] border-dark-blue"
 >
-  <h1 class="text-xl text-center text-dark-blue mt-2 mb-3">Your Holidays</h1>
+  <h1 class="text-xl text-center text-dark-blue mt-2 mb-3">Your trips</h1>
   <hr class="border-dark-blue" />
   <div class="grid grid-cols-3 gap-4 h-[735px] overflow-y-auto p-5">
     <app-trip *ngFor="let trip of trips" [trip]="trip"></app-trip>

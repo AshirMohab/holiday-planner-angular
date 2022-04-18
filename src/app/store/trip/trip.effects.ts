@@ -17,7 +17,7 @@ export class TripEffects {
           map((userTrips) => TripActions.getUserTripsCompleted({ userTrips })),
           catchError((error) => {
             this.notificationService.error(
-              `Sorry, couldn't get exhange rates.`,
+              `Sorry, couldn't get trips.`,
               error.toString(),
               { nzDuration: 0 }
             );

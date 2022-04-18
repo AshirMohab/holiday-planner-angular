@@ -16,7 +16,7 @@ export const tripTripsFailure = createAction(
 export const addUserTrip = createAction('[Trip] addUserTrip');
 
 export const addUserTripComplete = createAction(
-  '[Trip] addUserTrip',
+  '[Trip] addUserTripCompleted',
   props<{
     userTrip:
       | TripsModel
@@ -33,12 +33,12 @@ export const addUserTripComplete = createAction(
 export const getUserTrips = createAction('[Trip] getUserTrips');
 
 export const getUserTripsCompleted = createAction(
-  '[Trip] getUserTrips',
+  '[Trip] getUserTripsCompleted',
   props<{ userTrips: TripsModel[] }>()
 );
 
 export const setSelectedUserTrip = createAction(
-  '[Trip] getUserTrips',
+  '[Trip] setSelectedUserTrip',
   props<{ userTrips: TripsModel }>()
 );
 

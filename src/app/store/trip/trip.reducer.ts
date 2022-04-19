@@ -6,13 +6,20 @@ export const tripFeatureKey = 'trip';
 
 export interface TripState {
   isLoading: boolean;
-  selectedUserTrip: TripsModel | null;
+  selectedUserTrip: TripsModel;
   userTrips: TripsModel[];
 }
 
 export const initialState: TripState = {
   isLoading: false,
-  selectedUserTrip: null,
+  selectedUserTrip: {
+    tripID: '',
+    currency: '',
+    description: '',
+    itinerary: [],
+    name: '',
+    userEmail: '',
+  },
   userTrips: [],
 };
 
@@ -27,8 +34,8 @@ export const reducer = createReducer(
     userTrips,
   })),
 
-  on(TripActions.setSelectedUserTrip, (state, { userTrips }) => ({
+  on(TripActions.setSelectedUserTrip, (state, { selectedUserTrip }) => ({
     ...state,
-    selectedUserTrip: userTrips,
+    selectedUserTrip,
   }))
 );

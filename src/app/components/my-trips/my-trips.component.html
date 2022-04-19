@@ -1,13 +1,24 @@
-<h1>Currencies</h1>
-<div class="flex flex-wrap gap-8"></div>
-<button
-  type="button"
-  (click)="getMyTrips()"
-  class="text-black rounded-md w-full h-10"
->
-  Get Trips
-</button>
+<div class="grid grid-cols-1 flex-wrap flex-col">
+  <button
+    class="text-white bg-blue-500 rounded-md w-full h-10 primary-button"
+    (click)="isShowingTrips = !isShowingTrips"
+  >
+    {{ isShowingTrips ? "Hide" : "Show " }} Trips
+  </button>
+  <button
+    class="text-white bg-green-500 rounded-md w-full h-10 secondary-button"
+    (click)="addingTrip = !addingTrip"
+  >
+    {{ addingTrip ? "Hide" : "Show " }} Add trip
+  </button>
 
-<app-add-trips></app-add-trips>
+  <ng-container *ngIf="isShowingTrips">
+    <app-list-of-trips [trips]="myTripsResponse$ | async"></app-list-of-trips>
+  </ng-container>
 
-<app-list-of-trips></app-list-of-trips>
+  <ng-container *ngIf="addingTrip">
+    <app-add-trips></app-add-trips>
+  </ng-container>
+
+  <!-- <app-edit-trips [selectedTrip]="selectedTrip$ | async"></app-edit-trips> -->
+</div>

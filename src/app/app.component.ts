@@ -15,11 +15,6 @@ export interface NavLink {
 export class AppComponent {
   navLinks: NavLink[] = [
     {
-      routerLink: '/home',
-      activeRouterLink: 'active',
-      displayName: 'Home',
-    },
-    {
       routerLink: '/login',
       activeRouterLink: 'active',
       displayName: 'Login',
@@ -33,11 +28,6 @@ export class AppComponent {
       routerLink: '/my-trips',
       activeRouterLink: 'active',
       displayName: 'My Trips',
-    },
-    {
-      routerLink: '/**',
-      activeRouterLink: 'active',
-      displayName: 'Not Found',
     },
   ];
 

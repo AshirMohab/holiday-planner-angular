@@ -1,9 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import TripsModel from 'src/app/models/tripsModel';
 import User from 'src/app/models/user';
-import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -23,7 +21,6 @@ export class AddTripsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    console.log(this.user);
   }
 
   initForm() {
@@ -45,6 +42,7 @@ export class AddTripsComponent implements OnInit {
 
   addNewTrip() {
     const tripData: TripsModel = {
+      tripID: '',
       name: this.addTripForm.value.tripName,
       description: this.addTripForm.value.description,
       currency: this.addTripForm.value.currency,

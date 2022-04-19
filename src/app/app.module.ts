@@ -37,6 +37,14 @@ import { TripEffects } from './store/trip/trip.effects';
 import { EditDetailsComponent } from './components/user/edit-details/edit-details.component';
 import { AddTripsComponent } from './components/my-trips/add-trips/add-trips.component';
 import { ListOfTripsComponent } from './components/my-trips/list-of-trips/list-of-trips.component';
+import { TripPipePipe } from './pipes/trip-pipe.pipe';
+import { ItineraryPipePipe } from './pipes/itinerary-pipe.pipe';
+import { EditTripsComponent } from './components/my-trips/edit-trips/edit-trips.component';
+import { CalanderComponent } from './components/itinerary/calander/calander.component';
+import { MyItinerariesComponent } from './components/itinerary/my-itineraries/my-itineraries.component';
+import { AddItineraryComponent } from './components/itinerary/add-itinerary/add-itinerary.component';
+import * as fromItinerary from './store/itinerary/itinerary.reducer';
+import { ItineraryEffects } from './store/itinerary/itinerary.effects';
 
 registerLocaleData(en);
 
@@ -54,6 +62,12 @@ registerLocaleData(en);
     EditDetailsComponent,
     AddTripsComponent,
     ListOfTripsComponent,
+    TripPipePipe,
+    ItineraryPipePipe,
+    EditTripsComponent,
+    CalanderComponent,
+    MyItinerariesComponent,
+    AddItineraryComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,8 +89,9 @@ registerLocaleData(en);
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forFeature([TripEffects]),
+    EffectsModule.forFeature([TripEffects, ItineraryEffects]),
     StoreModule.forFeature(fromTrip.tripFeatureKey, fromTrip.reducer),
+    StoreModule.forFeature(fromItinerary.itineraryFeatureKey, fromItinerary.reducer),
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, AuthService],
   bootstrap: [AppComponent],

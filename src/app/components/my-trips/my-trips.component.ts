@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '@angular/fire/auth';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CurrencyResponse, CurrencyType } from 'src/app/models/currency';
 import TripsModel from 'src/app/models/tripsModel';
 import { CurrencyService } from 'src/app/services/currency.service';
 import { UserService } from 'src/app/services/user.service';
+import {
+  getUserTripsCompleted,
+  setSelectedUserTrip,
+} from 'src/app/store/trip/trip.actions';
 import { TripState } from 'src/app/store/trip/trip.reducer';
+
+import * as TripActions from 'src/app/store/trip/trip.actions';
+import * as TripSelectors from 'src/app/store/trip/trip.selectors';
 
 @Component({
   selector: 'app-my-trips',
@@ -15,13 +22,14 @@ import { TripState } from 'src/app/store/trip/trip.reducer';
 })
 export class MyTripsComponent implements OnInit {
   currencyResponse$!: Observable<CurrencyResponse>;
-  myTripsResponse$!: Observable<TripsModel>;
+  myTripsResponse$!: Observable<TripsModel[]>;
+  selectedTrip$!: Observable<TripsModel>;
   user: User = JSON.parse(localStorage.getItem('user')!);
 
   isAddingTrip: boolean = false;
   addingTrip: boolean = false;
-
-  trips = this.getMyTrips();
+  isShowingTrips: boolean = true;
+  isEditTrips: boolean = false;
 
   constructor(
     private currency: CurrencyService,
@@ -30,9 +38,14 @@ export class MyTripsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currencyResponse$ = this.currency.getCurrency();
-
-    console.log(this.trips);
+    // this.currencyResponse$ = this.currency.getCurrency();
+    this.stateStore.dispatch(TripActions.getUserTrips());
+    this.myTripsResponse$ = this.stateStore.pipe(
+      select(TripSelectors.selectUserTrips)
+    );
+    this.selectedTrip$ = this.stateStore.pipe(
+      select(TripSelectors.selectSelectedUserTrip)
+    );
   }
 
   identifyCurrency(index: number, currency: CurrencyType): string {
@@ -43,8 +56,9 @@ export class MyTripsComponent implements OnInit {
     return trip.userEmail;
   }
 
-  getMyTrips() {
-    const email = this.user.email;
-    return this.userService.getUserTrips(email);
+  selectUserTrip(selectedUserTrip: TripsModel) {
+    this.stateStore.dispatch(
+      TripActions.setSelectedUserTrip({ selectedUserTrip })
+    );
   }
 }

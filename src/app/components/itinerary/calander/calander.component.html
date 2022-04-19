@@ -1,0 +1,22 @@
+<div class="w-full h-[700px] bg-slate-100 rounded-xl overflow-x-auto px-5">
+  <div *ngIf="!itineraries?.length">
+    <nz-calendar nzFullscreen="true" [(ngModel)]="chosenDate">
+      <ul *nzDateCell="let date">
+        <!-- To Show Their Holiday Plans (hence the date they can add itenaries on)-->
+        <ng-container
+          *ngIf="date >= startDate && date <= endDate"
+          class="bg-blue-400"
+        >
+          <div
+            class="bg-dark-blue bg-opacity-80 w-screen h-fit min-h-screen"
+          ></div>
+        </ng-container>
+      </ul>
+    </nz-calendar>
+  </div>
+  <div *ngIf="itineraries?.length" class="py-5">
+    <h1 class="text-2xl text-center text-dark-blue mb-3">
+      No itinerary items for this trip
+    </h1>
+  </div>
+</div>

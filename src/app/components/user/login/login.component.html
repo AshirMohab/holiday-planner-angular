@@ -1,0 +1,91 @@
+<div class="md:flex hidden w-screen h-full justify-center py-20">
+  <div
+    class="grid grid-cols-1 w-[400px] bg-slate-100 h-fit rounded-lg divide-x-[1px] divide-dark-blue"
+  >
+    <div class="p-5 gap-4">
+      <h1 class="text-center text-xl">Log into your account</h1>
+      <form
+        nz-form
+        class="py-7"
+        [formGroup]="loginUserForm"
+        (submit)="loginUser()"
+      >
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="email" class="text-base">Email:</label>
+            <nz-input-group nzPrefixIcon="mail">
+              <input
+                nz-input
+                id="email"
+                formControlName="email"
+                type="email"
+                placeholder="bob.ross@icanpaint.co.za"
+              />
+            </nz-input-group>
+            <p
+              *ngIf="
+                loginUserForm.get('email')?.invalid &&
+                loginUserForm.get('email')?.touched
+              "
+              class="text-red-500"
+            >
+              Email Is Required
+            </p>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="password" class="text-base">Password:</label>
+            <nz-input-group nzPrefixIcon="lock">
+              <input
+                nz-input
+                id="password"
+                formControlName="password"
+                placeholder="password"
+                [type]="passwordVisible ? 'text' : 'password'"
+              />
+              <div
+                role="button"
+                class="flex items-center border-[1px] float-right px-2 py-1 text-dark-blue hover:text-blue-500 duration-300 bg-white gap-4"
+                (click)="passwordVisible = !passwordVisible"
+              >
+                <i
+                  [class]="
+                    passwordVisible
+                      ? 'fa-solid fa-eye'
+                      : 'fa-solid fa-eye-slash'
+                  "
+                ></i>
+              </div>
+            </nz-input-group>
+            <p
+              *ngIf="
+                loginUserForm.get('password')?.invalid &&
+                loginUserForm.get('password')?.touched
+              "
+              class="text-red-500"
+            >
+              Password Is Required
+            </p>
+          </nz-form-control>
+        </nz-form-item>
+        <button
+          type="submit"
+          class="text-white bg-blue-500 rounded-md w-full h-10 form-button"
+          (click)="loginUser()"
+        >
+          Log in
+        </button>
+
+        <p class="text-sm text-center mt-2">
+          Don't have an account?
+          <a
+            class="cursor-pointer duration-300 form-link"
+            routerLink="/register"
+            >Sign up</a
+          >
+        </p>
+      </form>
+    </div>
+  </div>
+</div>

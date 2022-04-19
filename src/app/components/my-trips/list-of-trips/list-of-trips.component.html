@@ -1,0 +1,15 @@
+<div
+  *ngIf="trips?.length"
+  class="shadow-sm rounded-md border-[1px] border-blue-600"
+>
+  <h1 class="text-xl text-center text-blue-600 mt-2 mb-3">Your trips</h1>
+  <hr class="border-blue-600" />
+  <div class="grid grid-cols-3 gap-4 h-[735px] overflow-x-auto p-5">
+    <app-trip *ngFor="let trip of trips" [trip]="trip"></app-trip>
+  </div>
+</div>
+<div *ngIf="!trips?.length">
+  <h1 class="text-2xl text-center text-blue-600 mt-2 mb-3">
+    No trips have been planned
+  </h1>
+</div>

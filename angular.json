@@ -28,9 +28,15 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
+              "src/theme.less",
               "src/styles.scss"
             ],
             "scripts": []
@@ -103,9 +109,22 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "holiday-planner-angular:build:production",
+            "firebaseProject": "holiday-planner-angular",
+            "firebaseHostingSite": "holiday-planner-angular"
+          }
         }
       }
     }
   },
-  "defaultProject": "holiday-planner-angular"
+  "defaultProject": "holiday-planner-angular",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

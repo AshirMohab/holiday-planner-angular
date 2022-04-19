@@ -1,0 +1,98 @@
+<div class="md:flex hidden w-screen h-full justify-center py-20">
+  <div
+    class="grid grid-cols-1 w-[400px] bg-slate-100 h-fit rounded-lg divide-x-[1px] divide-dark-blue place-items-center mx-40 my-20"
+  >
+    <div class="p-5 gap-4">
+      <h1 class="text-center text-xl">Add Trip</h1>
+      <form
+        nz-form
+        class="py-7"
+        [formGroup]="addItineraryForm"
+        (submit)="submitItinerary()"
+      >
+        <nz-form-item class="form-item">
+          <nz-form-control class="">
+            <label for="name" class="text-base">Name of Itinerary:</label>
+            <nz-input-group>
+              <input
+                nz-input
+                id="name"
+                formControlName="name"
+                type="text"
+                placeholder="swimming"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="tag" class="text-base">Tag</label>
+            <nz-input-group>
+              <input
+                nz-input
+                id="tag"
+                formControlName="tag"
+                type="text"
+                placeholder="Travel or Destination"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="startDate" class="text-base">Start Date</label>
+            <nz-input-group>
+              <input
+                nz-input
+                id="startDate"
+                formControlName="startDate"
+                type="date"
+                placeholder=""
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="endDate" class="text-base">End Date</label>
+            <nz-input-group>
+              <input
+                nz-input
+                id="endDate"
+                formControlName="endDate"
+                type="date"
+                placeholder=""
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="cost" class="text-base">Cost</label>
+            <nz-input-group>
+              <input
+                nz-input
+                id="cost"
+                formControlName="cost"
+                type="number"
+                placeholder="0"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <button
+          type="submit"
+          class="text-white bg-blue-500 rounded-md w-full h-10 form-button"
+          (click)="addItinerary()"
+        >
+          Add Itinerary
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

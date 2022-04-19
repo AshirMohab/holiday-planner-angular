@@ -1,0 +1,203 @@
+<div class="md:flex hidden w-screen h-full justify-center py-20">
+  <div
+    class="grid grid-cols-1 w-[400px] bg-slate-100 h-fit rounded-lg divide-x-[1px] divide-dark-blue"
+  >
+    <div class="p-5 gap-4">
+      <h1 class="text-dark-blue text-center text-xl gap-2">
+        Create new account
+      </h1>
+      <form
+        nz-form
+        class="p-7"
+        [formGroup]="registerUserForm"
+        (submit)="registerNewUser()"
+      >
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="name" class="text-base">Name:</label>
+            <nz-input-group>
+              <input
+                nz-input
+                id="name"
+                formControlName="name"
+                type="text"
+                placeholder="Bob"
+                required
+                (keyup)="
+                  registerUserForm.value.name
+                    ? registerUserForm.get('email')?.enable()
+                    : registerUserForm.get('email')?.disable()
+                "
+              />
+            </nz-input-group>
+            <p
+              *ngIf="
+                this.registerUserForm.get('email')?.disabled &&
+                this.registerUserForm.get('name')?.touched
+              "
+              class="text-red-500"
+            >
+              Name is required
+            </p>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="surname" class="text-base">Surname:</label>
+            <nz-input-group>
+              <input
+                nz-input
+                id="surname"
+                formControlName="surname"
+                type="text"
+                placeholder="Ross"
+                required
+                (keyup)="
+                  registerUserForm.value.surname
+                    ? registerUserForm.get('email')?.enable()
+                    : registerUserForm.get('email')?.disable()
+                "
+              />
+            </nz-input-group>
+            <p
+              *ngIf="
+                this.registerUserForm.get('email')?.disabled &&
+                this.registerUserForm.get('surname')?.touched
+              "
+              class="text-red-500"
+            >
+              Surname is required
+            </p>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label class="text-base py-2">Email:</label>
+            <nz-input-group nzPrefixIcon="mail">
+              <input
+                nz-input
+                id="email"
+                formControlName="email"
+                type="email"
+                placeholder="bob.ross@icanpaint.co.za"
+                (keyup)="
+                  verifyEmail()
+                    ? registerUserForm.get('password')?.enable()
+                    : registerUserForm.get('password')?.disable()
+                "
+              />
+            </nz-input-group>
+            <p
+              *ngIf="
+                registerUserForm.get('email')?.touched &&
+                registerUserForm.get('email')?.enabled &&
+                registerUserForm.get('password')?.disabled
+              "
+              class="text-red-500"
+            >
+              Invalid Email
+            </p>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="password" class="text-base py-2">Password:</label>
+            <nz-input-group nzPrefixIcon="lock">
+              <input
+                nz-input
+                id="password"
+                formControlName="password"
+                placeholder="password"
+                [type]="passwordVisible ? 'text' : 'password'"
+                (keyup)="
+                  verifyPassword()
+                    ? registerUserForm.get('confirmPassword')?.enable()
+                    : registerUserForm.get('confirmPassword')?.disable()
+                "
+              />
+              <div
+                role="button"
+                class="{{
+                  registerUserForm.get('password')?.disabled
+                    ? 'cursor-not-allowed'
+                    : 'hover:text-blue-500 duration-300 bg-white'
+                }} flex items-center border-[1px] px-2 py-1 text-dark-blue"
+                (click)="
+                  registerUserForm.get('password')?.disabled
+                    ? ''
+                    : (passwordVisible = !passwordVisible)
+                "
+              >
+                <i
+                  [class]="
+                    passwordVisible
+                      ? 'fa-solid fa-eye'
+                      : 'fa-solid fa-eye-slash'
+                  "
+                ></i>
+              </div>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="form-item">
+          <nz-form-control>
+            <label for="confirmPassword" class="text-base py-2"
+              >Confirm Password:</label
+            >
+            <nz-input-group nzPrefixIcon="lock">
+              <input
+                nz-input
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                placeholder="password"
+                [type]="confirmPasswordVisible ? 'text' : 'password'"
+                (keyup)="
+                  registerUserForm.value.password ===
+                  registerUserForm.value.confirmPassword
+                    ? (passwordsConfirmed = true)
+                    : (passwordsConfirmed = false)
+                "
+              />
+              <div
+                class="{{
+                  registerUserForm.get('confirmPassword')?.disabled
+                    ? 'cursor-not-allowed'
+                    : 'hover:text-blue-500 duration-300 bg-white'
+                }} flex items-center border-[1px] px-2 py-1 text-dark-blue"
+                (click)="
+                  registerUserForm.get('confirmPassword')?.disabled
+                    ? ''
+                    : (confirmPasswordVisible = !confirmPasswordVisible)
+                "
+              >
+                <i
+                  [class]="
+                    confirmPasswordVisible
+                      ? 'fa-solid fa-eye'
+                      : 'fa-solid fa-eye-slash'
+                  "
+                ></i>
+              </div>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <button
+          type="submit"
+          class="text-white bg-blue-500 rounded-md w-full h-10 form-button"
+          (click)="submitRegistration()"
+        >
+          Sign up
+        </button>
+        <p class="text-sm text-center mt-2">
+          Already have an account?
+          <a class="form-link cursor-pointer duration-300" routerLink="/login"
+            >Log in</a
+          >
+        </p>
+      </form>
+    </div>
+  </div>
+</div>

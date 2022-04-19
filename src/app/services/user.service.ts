@@ -16,14 +16,6 @@ export class UserService {
     private notificationService: NzNotificationService
   ) {}
 
-  async addUserTrip(trip: TripsModel) {
-    this.angularFireStore.collection('Trips').add({
-      ...trip,
-      userID: await this.angularFireAuth.currentUser.then((user) => user?.uid),
-      tripID: this.angularFireStore.createId(),
-    });
-  }
-
   async deleteUser(userID: string) {
     await deleteDoc(doc(this.fireStore, 'Users', userID));
     this.notificationService.success('User has been removed', 'true');

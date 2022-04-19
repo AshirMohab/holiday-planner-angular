@@ -30,5 +30,6 @@ export class TripComponent implements OnInit {
     this.stateStore.dispatch(
       TripActions.setSelectedUserTrip({ selectedUserTrip })
     );
+    console.log(selectedUserTrip);
   }
 }

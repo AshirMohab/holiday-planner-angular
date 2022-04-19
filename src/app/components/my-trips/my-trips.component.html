@@ -19,6 +19,6 @@
   <ng-container *ngIf="addingTrip">
     <app-add-trips></app-add-trips>
   </ng-container>
-
-  <!-- <app-edit-trips [selectedTrip]="selectedTrip$ | async"></app-edit-trips> -->
 </div>
+
+<div>{{ (selectedTrip$ | async)?.userEmail }}</div>

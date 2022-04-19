@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
+import { user } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestore,
+  DocumentReference,
+} from '@angular/fire/compat/firestore';
 import { deleteDoc, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { Observable } from 'rxjs';
+import { EMPTY, from, mergeMap, Observable, retry } from 'rxjs';
 import ItineraryItem from '../models/itineraryItem';
 import TripsModel from '../models/tripsModel';
 
@@ -18,15 +22,35 @@ export class TripService {
     private notificationService: NzNotificationService
   ) {}
 
-  getUserTrips(): Observable<TripsModel[]> {
-    const tripsCollection = this.angularFireStore.collection<TripsModel>(
-      'Trips'
-      // (ref) => ref.where('uid', '==', userID)
+  addUserTrip(newTrip: TripsModel): Observable<DocumentReference<TripsModel>> {
+    return from(
+      this.angularFireAuth.currentUser.then((currentUser) => currentUser?.uid)
+    ).pipe(
+      mergeMap((uid) => {
+        if (uid) {
+          return from(
+            this.angularFireStore.collection<TripsModel>('Trips').add({
+              ...newTrip,
+              userID: uid,
+              tripID: this.angularFireStore.createId(),
+            })
+          );
+        }
+        return EMPTY;
+      })
     );
+  }
 
-    const userTrips$ = tripsCollection.valueChanges();
-
-    return userTrips$;
+  getUserTrips(userID: string): Observable<TripsModel[]> {
+    console.log(userID);
+    if (!userID) {
+      return EMPTY;
+    }
+    return this.angularFireStore
+      .collection<TripsModel>('Trips', (ref) =>
+        ref.where('userID', '==', userID)
+      )
+      .valueChanges();
   }
 
   getTripItinerary(tripID: string): Observable<ItineraryItem[]> {

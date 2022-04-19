@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { map, Observable } from 'rxjs';
+import User from './models/user';
 import { AuthService } from './services/auth.service';
+import { UserState } from './store/user/user.reducer';
+import { selectCurrentUser } from './store/user/user.selectors';
 
 export interface NavLink {
   routerLink: string;
@@ -13,6 +18,8 @@ export interface NavLink {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  userLogin$: Observable<boolean>;
+
   navLinks: NavLink[] = [
     {
       routerLink: '/login',
@@ -35,7 +42,15 @@ export class AppComponent {
     return navLink.routerLink;
   }
 
-  constructor(public authorise: AuthService) {}
+  constructor(
+    public authorise: AuthService,
+    private userStore: Store<UserState>
+  ) {
+    this.userLogin$ = userStore.pipe(
+      select(selectCurrentUser),
+      map((user) => !!user?.uid)
+    );
+  }
 
   signOut() {
     this.authorise.logOutUser();

@@ -12,6 +12,9 @@ import User from '../models/user';
 import { Router } from '@angular/router';
 import { doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { setUpUser } from '../shared/setUp';
+import { Store } from '@ngrx/store';
+import { UserState } from '../store/user/user.reducer';
+import { setCurrenctUser } from '../store/user/user.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -25,20 +28,29 @@ export class AuthService {
     private angularFireStore: AngularFirestore,
     private fireStore: Firestore,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private userStore: Store<UserState>
   ) {
     this.authorize.authState.subscribe((user) => {
       if (user) {
         this.defaultUser = {
-          ...user,
+          uid: user.uid,
+          emailVerified: user.emailVerified,
           email: user.email || '',
           photoURL: user.photoURL || '',
           displayName: user.displayName || '',
         };
+        this.userStore.dispatch(
+          setCurrenctUser({ currentUser: this.defaultUser })
+        );
         localStorage.setItem('user', JSON.stringify(this.defaultUser));
+        this.router.navigate(['my-trips']);
       } else {
+        this.userStore.dispatch(setCurrenctUser({ currentUser: null }));
+
         localStorage.setItem('user', 'null');
         this.defaultUser = null;
+        this.router.navigate(['login']);
       }
     });
   }
@@ -56,6 +68,7 @@ export class AuthService {
             emailVerified: res.user.emailVerified,
           };
           // this.createUser(user);
+
           this.angularFireStore.collection('Users').add({ ...user });
           this.router.navigate(['/login']);
         }
@@ -77,45 +90,17 @@ export class AuthService {
     return this.loginSuccess;
   }
 
-  // async updateUser(email: string, password: string) {
-  //   return this.authorize
-  //     .signInWithEmailAndPassword(email, password)
-  //     .then((res) => {
-  //       this.ngZone.run(() => {
-  //         this.router.navigate(['my-trips']);
-  //       });
-  //       if (!!res?.user) {
-  //         const user: User = {
-  //           uid: res.user.uid,
-
-  //           displayName: res.user.displayName || '',
-  //           email: res.user.email || '',
-  //           photoURL: res.user.photoURL || '',
-  //           emailVerified: res.user.emailVerified,
-  //         };
-  //         // this.createUser(user);
-  //         this.fireStore
-  //           .doc(`Users/${user.uid}`)
-  //           .set({ ...user }, { merge: true });
-  //       }
-  //     })
-  //     .catch((err: Error) => {
-  //       console.error(err.message);
-  //     });
-  // }
-
   get isLoggedIn(): boolean {
-    const user: User = JSON.parse(localStorage.getItem('user')!);
-    return !!user;
+    const currentUser: User = JSON.parse(localStorage.getItem('user')!);
+    this.userStore.dispatch(setCurrenctUser({ currentUser }));
+    return !!currentUser;
   }
 
   loginUser(email: string, password: string) {
     this.authorize
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
-        this.ngZone.run(() => {
-          this.router.navigate(['my-trips']);
-        });
+        this.ngZone.run(() => {});
         this.loginSuccess = true;
       })
       .catch((err: Error) => {
@@ -126,8 +111,8 @@ export class AuthService {
 
   logOutUser() {
     return this.authorize.signOut().then(() => {
+      this.userStore.dispatch(setCurrenctUser({ currentUser: null }));
       localStorage.removeItem('user');
-      this.router.navigate(['/login']);
     });
   }
 }

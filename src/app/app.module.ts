@@ -45,6 +45,7 @@ import { MyItinerariesComponent } from './components/itinerary/my-itineraries/my
 import { AddItineraryComponent } from './components/itinerary/add-itinerary/add-itinerary.component';
 import * as fromItinerary from './store/itinerary/itinerary.reducer';
 import { ItineraryEffects } from './store/itinerary/itinerary.effects';
+import * as fromUser from './store/user/user.reducer';
 
 registerLocaleData(en);
 
@@ -91,7 +92,11 @@ registerLocaleData(en);
     }),
     EffectsModule.forFeature([TripEffects, ItineraryEffects]),
     StoreModule.forFeature(fromTrip.tripFeatureKey, fromTrip.reducer),
-    StoreModule.forFeature(fromItinerary.itineraryFeatureKey, fromItinerary.reducer),
+    StoreModule.forFeature(
+      fromItinerary.itineraryFeatureKey,
+      fromItinerary.reducer
+    ),
+    StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, AuthService],
   bootstrap: [AppComponent],

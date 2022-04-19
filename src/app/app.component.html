@@ -1,4 +1,4 @@
-<nav class="navbar" role="banner" *ngIf="authorise.defaultUser">
+<nav class="navbar" role="banner" *ngIf="!!(userLogin$ | async)">
   <ul>
     <li *ngFor="let navLink of navLinks; trackBy: identifyLinks">
       <a
@@ -8,7 +8,7 @@
       >
     </li>
     <li
-      *ngIf="authorise.defaultUser"
+      *ngIf="!!(userLogin$ | async)"
       nz-submenu
       nzOpen
       nzTitle="Logout"

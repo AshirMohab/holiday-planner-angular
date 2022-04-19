@@ -14,6 +14,6 @@ export class ListOfTripsComponent implements OnInit {
   ngOnInit(): void {}
 
   identifyTrips(index: number, trip: TripsModel) {
-    return index;
+    return trip.tripID;
   }
 }

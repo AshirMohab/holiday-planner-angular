@@ -1,6 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import TripsModel from 'src/app/models/tripsModel';
 
+export const addUserTrip = createAction(
+  '[Trip] addUserTrip',
+  props<{ newTrip: TripsModel }>()
+);
+
 export const getUserTrips = createAction('[Trip] getUserTrips');
 
 export const getUserTripsCompleted = createAction(

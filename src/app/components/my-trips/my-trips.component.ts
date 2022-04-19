@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { CurrencyResponse, CurrencyType } from 'src/app/models/currency';
 import TripsModel from 'src/app/models/tripsModel';
 import { CurrencyService } from 'src/app/services/currency.service';
@@ -14,6 +14,8 @@ import { TripState } from 'src/app/store/trip/trip.reducer';
 
 import * as TripActions from 'src/app/store/trip/trip.actions';
 import * as TripSelectors from 'src/app/store/trip/trip.selectors';
+import { UserState } from 'src/app/store/user/user.reducer';
+import { selectCurrentUser } from 'src/app/store/user/user.selectors';
 
 @Component({
   selector: 'app-my-trips',
@@ -24,6 +26,7 @@ export class MyTripsComponent implements OnInit {
   currencyResponse$!: Observable<CurrencyResponse>;
   myTripsResponse$!: Observable<TripsModel[]>;
   selectedTrip$!: Observable<TripsModel>;
+  // destroy$ = new Subject<boolean>();
   user: User = JSON.parse(localStorage.getItem('user')!);
 
   isAddingTrip: boolean = false;
@@ -34,19 +37,27 @@ export class MyTripsComponent implements OnInit {
   constructor(
     private currency: CurrencyService,
     private userService: UserService,
-    private stateStore: Store<TripState>
+    private stateStore: Store<TripState>,
+    private userStore: Store<UserState>
   ) {}
 
   ngOnInit(): void {
     // this.currencyResponse$ = this.currency.getCurrency();
-    this.stateStore.dispatch(TripActions.getUserTrips());
     this.myTripsResponse$ = this.stateStore.pipe(
       select(TripSelectors.selectUserTrips)
     );
     this.selectedTrip$ = this.stateStore.pipe(
       select(TripSelectors.selectSelectedUserTrip)
     );
+
+    // this.userStore
+    //   .pipe(takeUntil(this.destroy$), select(selectCurrentUser))
+    //   .subscribe(() => this.stateStore.dispatch(TripActions.getUserTrips()));
   }
+
+  // ngOnDestroy(): void {
+  //   this.destroy$.next(true);
+  // }
 
   identifyCurrency(index: number, currency: CurrencyType): string {
     return currency.CurrencyData.code;

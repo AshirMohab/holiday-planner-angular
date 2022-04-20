@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import ItineraryItem from 'src/app/models/itineraryItem';
+import TripsModel from 'src/app/models/tripsModel';
 
 @Component({
   selector: 'app-calander',
@@ -7,6 +8,7 @@ import ItineraryItem from 'src/app/models/itineraryItem';
   styleUrls: ['./calander.component.scss'],
 })
 export class CalanderComponent implements OnInit {
+  @Input() itinerary!: ItineraryItem[] | null;
   constructor() {}
 
   ngOnInit(): void {}

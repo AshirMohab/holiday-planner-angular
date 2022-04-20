@@ -2,7 +2,9 @@
   <nz-tabset>
     <nz-tab nzTitle="Selected Trips Calender">
       <ng-container *ngIf="selectedTrip$">
-        <app-calander></app-calander>
+        <app-calander
+          [itinerary]="selectedTrip?.itinerary || null"
+        ></app-calander>
       </ng-container>
     </nz-tab>
     <nz-tab nzTitle="Itinerary Items of selected Trip">

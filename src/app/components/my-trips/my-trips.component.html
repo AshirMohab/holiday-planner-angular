@@ -32,7 +32,7 @@
         <app-add-trips></app-add-trips>
       </ng-container>
     </nz-tab>
-    <nz-tab nzTitle="Edit Trip">
+    <nz-tab nzTitle="Edit Selected Trip">
       <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
         <app-edit-trips [selectedTrip]="selectedTrip$ | async"></app-edit-trips>
       </ng-container>

@@ -22,6 +22,16 @@ export const updateUserTrip = createAction(
   '[Trip] updateUserTrip',
   props<{ trip: TripsModel }>()
 );
+
+export const removeUserTrip = createAction(
+  '[Trip] removeUserTrip',
+  props<{ tripToRemove: TripsModel }>()
+);
+
+export const removeTripItinerary = createAction(
+  '[Trip] removeTripItinerary',
+  props<{ trip: TripsModel }>()
+);
 // export const getUserTripsCompleted = createAction(
 //   '[Trip] getUserTrips',
 //   props<{ userTrips: TripsModel[] }>()

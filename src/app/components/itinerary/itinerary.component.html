@@ -2,22 +2,19 @@
   <nz-tabset>
     <nz-tab nzTitle="Selected Trips Calender">
       <ng-container *ngIf="selectedTrip$">
-        <app-calander>
-          [itineraries]="((selectedTrip$ | async)?.itinerary || null)"
-          ></app-calander
-        >
+        <app-calander></app-calander>
       </ng-container>
     </nz-tab>
     <nz-tab nzTitle="Itinerary Items of selected Trip">
       <ng-container>
         <app-my-itineraries
-          [itinerary]="(selectedTrip$ | async)?.itinerary || null"
-          [currency]="(selectedTrip$ | async)?.currency"
+          [itinerary]="selectedTrip?.itinerary || null"
+          [currency]="selectedTrip?.currency"
         ></app-my-itineraries>
       </ng-container>
     </nz-tab>
     <nz-tab nzTitle="Add itinerary">
-      <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
+      <ng-container *ngIf="selectedTrip?.tripID">
         <app-add-itinerary
           [selectedTrip]="selectedTrip$ | async"
         ></app-add-itinerary>

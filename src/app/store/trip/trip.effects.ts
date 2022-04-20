@@ -66,7 +66,45 @@ export class TripEffects {
 
           catchError((error) => {
             this.notificationService.error(
-              `Sorry, couldn't update trip.`,
+              `Unable to update trip.`,
+              error.toString(),
+              { nzDuration: 0 }
+            );
+            return EMPTY;
+          })
+        )
+      )
+    );
+  });
+
+  removeUserTrip$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TripActions.removeUserTrip),
+      concatMap(({ tripToRemove }) =>
+        this.tripService.editUserTrip(tripToRemove).pipe(
+          map(() => TripActions.getUserTrips()),
+          catchError((error) => {
+            this.notificationService.error(
+              `Unable to remove trip.`,
+              error.toString(),
+              { nzDuration: 0 }
+            );
+            return EMPTY;
+          })
+        )
+      )
+    );
+  });
+
+  removetripItinerary$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TripActions.removeTripItinerary),
+      concatMap(({ trip }) =>
+        this.tripService.editUserTrip(trip).pipe(
+          map(() => TripActions.getUserTrips()),
+          catchError((error) => {
+            this.notificationService.error(
+              'Unable to remove itinerary item from trip.',
               error.toString(),
               { nzDuration: 0 }
             );

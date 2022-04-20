@@ -1,5 +1,5 @@
-<div class="grid grid-cols-1 flex-wrap flex-col">
-  <button
+<div class="grid grid-cols-1 flex-wrap flex-col p-3 m-4">
+  <!-- <button
     class="text-white bg-blue-500 rounded-md w-full h-10 primary-button"
     (click)="isShowingTrips = !isShowingTrips"
   >
@@ -12,13 +12,36 @@
     {{ addingTrip ? "Hide" : "Show " }} Add trip
   </button>
 
-  <ng-container *ngIf="isShowingTrips">
-    <app-list-of-trips [trips]="myTripsResponse$ | async"></app-list-of-trips>
-  </ng-container>
-
-  <ng-container *ngIf="addingTrip">
-    <app-add-trips></app-add-trips>
-  </ng-container>
+  <button
+    class="text-white bg-red-300 rounded-md w-full h-10 teritary-button mt-2"
+    type="submit"
+    (click)="isEditTrips = !isEditTrips"
+  >
+    {{ isEditTrips ? "Hide" : "Show " }} Edit Trip
+  </button> -->
+  <nz-tabset>
+    <nz-tab nzTitle="My Trips">
+      <ng-container>
+        <app-list-of-trips
+          [trips]="myTripsResponse$ | async"
+        ></app-list-of-trips>
+      </ng-container>
+    </nz-tab>
+    <nz-tab nzTitle="Add Trip">
+      <ng-container>
+        <app-add-trips></app-add-trips>
+      </ng-container>
+    </nz-tab>
+    <nz-tab nzTitle="Edit Trip">
+      <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
+        <app-edit-trips [selectedTrip]="selectedTrip$ | async"></app-edit-trips>
+      </ng-container>
+    </nz-tab>
+    <nz-tab nzTitle="View Selected Trip itinerary">
+      <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
+        <app-itinerary [selectedTrip]="selectedTrip$ | async"></app-itinerary>
+      </ng-container>
+    </nz-tab>
+    >
+  </nz-tabset>
 </div>
-
-<div>{{ (selectedTrip$ | async)?.userEmail }}</div>

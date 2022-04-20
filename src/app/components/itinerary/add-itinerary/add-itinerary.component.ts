@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import ItineraryItem from 'src/app/models/itineraryItem';
 import TripsModel from 'src/app/models/tripsModel';
 import { TripService } from 'src/app/services/trip.service';
 import { UserService } from 'src/app/services/user.service';
-import { updateTrip } from 'src/app/store/trip/trip.actions';
+import { updateUserTrip } from 'src/app/store/trip/trip.actions';
 import { TripState } from 'src/app/store/trip/trip.reducer';
 
 @Component({
@@ -15,7 +15,7 @@ import { TripState } from 'src/app/store/trip/trip.reducer';
 })
 export class AddItineraryComponent implements OnInit {
   addItineraryForm!: FormGroup;
-  selectedTrip!: TripsModel | null;
+  @Input() selectedTrip!: TripsModel | null;
 
   constructor(
     private tripService: TripService,
@@ -48,7 +48,7 @@ export class AddItineraryComponent implements OnInit {
   }
 
   addItinerary() {
-    const tripItinerary: ItineraryItem = {
+    const newTripItinerary: ItineraryItem = {
       name: this.addItineraryForm.value.name,
       tag: this.addItineraryForm.value.tag,
       startDate: this.addItineraryForm.value.startDate,
@@ -64,9 +64,9 @@ export class AddItineraryComponent implements OnInit {
         // description: this.selectedTrip?.description || '',
         // currency: this.selectedTrip?.currency || '',
         // userEmail: this.selectedTrip?.userEmail || '',
-        itinerary: [{ ...tripItinerary }],
+        itinerary: [...this.selectedTrip.itinerary, newTripItinerary],
       };
-      this.tripStore.dispatch(updateTrip({ trip: newTrip }));
+      this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));
     }
   }
 }

@@ -3,7 +3,9 @@
     class="grid grid-cols-1 w-[400px] bg-slate-100 h-fit rounded-lg divide-x-[1px] divide-dark-blue place-items-center mx-40 my-20"
   >
     <div class="p-5 gap-4">
-      <h1 class="text-center text-xl">Add Trip</h1>
+      <h1 class="text-center text-xl">
+        Add New Itinerary Item to {{ selectedTrip?.name }}
+      </h1>
       <form
         nz-form
         class="py-7"

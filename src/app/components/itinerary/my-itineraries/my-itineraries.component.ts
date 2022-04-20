@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import ItineraryItem from 'src/app/models/itineraryItem';
 
 @Component({
   selector: 'app-my-itineraries',
   templateUrl: './my-itineraries.component.html',
-  styleUrls: ['./my-itineraries.component.scss']
+  styleUrls: ['./my-itineraries.component.scss'],
 })
 export class MyItinerariesComponent implements OnInit {
+  @Input() itinerary!: ItineraryItem[] | null;
+  @Input() currency!: string | undefined;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

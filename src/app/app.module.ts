@@ -43,8 +43,7 @@ import { EditTripsComponent } from './components/my-trips/edit-trips/edit-trips.
 import { CalanderComponent } from './components/itinerary/calander/calander.component';
 import { MyItinerariesComponent } from './components/itinerary/my-itineraries/my-itineraries.component';
 import { AddItineraryComponent } from './components/itinerary/add-itinerary/add-itinerary.component';
-import * as fromItinerary from './store/itinerary/itinerary.reducer';
-import { ItineraryEffects } from './store/itinerary/itinerary.effects';
+
 import * as fromUser from './store/user/user.reducer';
 
 registerLocaleData(en);
@@ -90,12 +89,9 @@ registerLocaleData(en);
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forFeature([TripEffects, ItineraryEffects]),
+    EffectsModule.forFeature([TripEffects]),
     StoreModule.forFeature(fromTrip.tripFeatureKey, fromTrip.reducer),
-    StoreModule.forFeature(
-      fromItinerary.itineraryFeatureKey,
-      fromItinerary.reducer
-    ),
+
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, AuthService],

@@ -1,10 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import TripsModel from 'src/app/models/tripsModel';
 import { UserService } from 'src/app/services/user.service';
-import { updateTrip } from 'src/app/store/trip/trip.actions';
+import { updateUserTrip } from 'src/app/store/trip/trip.actions';
 import { TripState } from 'src/app/store/trip/trip.reducer';
 import * as TripActions from 'src/app/store/trip/trip.actions';
 import * as TripSelectors from 'src/app/store/trip/trip.selectors';
@@ -13,6 +18,7 @@ import * as TripSelectors from 'src/app/store/trip/trip.selectors';
   selector: 'app-edit-trips',
   templateUrl: './edit-trips.component.html',
   styleUrls: ['./edit-trips.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditTripsComponent implements OnInit {
   editTripForm!: FormGroup;
@@ -30,7 +36,6 @@ export class EditTripsComponent implements OnInit {
     this.selectedTrip$ = this.tripStore.pipe(
       select(TripSelectors.selectSelectedUserTrip)
     );
-    console.log(this.selectedTrip);
   }
 
   initForm() {
@@ -63,6 +68,11 @@ export class EditTripsComponent implements OnInit {
       itinerary: this.selectedTrip?.itinerary || [],
     };
 
-    this.tripStore.dispatch(updateTrip({ trip: newTrip }));
+    this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));
+    // this.rehydrateTrips();
+  }
+
+  rehydrateTrips() {
+    this.tripStore.dispatch(TripActions.getUserTrips());
   }
 }

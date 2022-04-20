@@ -2,7 +2,6 @@
   <div *ngIf="!itineraries?.length">
     <nz-calendar nzFullscreen="true" [(ngModel)]="chosenDate">
       <ul *nzDateCell="let date">
-        <!-- To Show Their Holiday Plans (hence the date they can add itenaries on)-->
         <ng-container
           *ngIf="date >= startDate && date <= endDate"
           class="bg-blue-400"

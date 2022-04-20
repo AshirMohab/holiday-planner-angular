@@ -18,8 +18,8 @@ export const setSelectedUserTrip = createAction(
   props<{ selectedUserTrip: TripsModel }>()
 );
 
-export const updateTrip = createAction(
-  '[Trip] updateTrip',
+export const updateUserTrip = createAction(
+  '[Trip] updateUserTrip',
   props<{ trip: TripsModel }>()
 );
 // export const getUserTripsCompleted = createAction(

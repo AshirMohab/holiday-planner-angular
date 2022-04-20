@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -21,6 +26,7 @@ import { selectCurrentUser } from 'src/app/store/user/user.selectors';
   selector: 'app-my-trips',
   templateUrl: './my-trips.component.html',
   styleUrls: ['./my-trips.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyTripsComponent implements OnInit {
   currencyResponse$!: Observable<CurrencyResponse>;
@@ -59,17 +65,21 @@ export class MyTripsComponent implements OnInit {
   //   this.destroy$.next(true);
   // }
 
-  identifyCurrency(index: number, currency: CurrencyType): string {
-    return currency.CurrencyData.code;
-  }
+  // identifyCurrency(index: number, currency: CurrencyType): string {
+  //   return currency.CurrencyData.code;
+  // }
 
-  identifyTrips(index: number, trip: TripsModel): string {
-    return trip.userEmail;
-  }
+  // identifyTrips(index: number, trip: TripsModel): string {
+  //   return trip.tripID;
+  // }
 
-  selectUserTrip(selectedUserTrip: TripsModel) {
-    this.stateStore.dispatch(
-      TripActions.setSelectedUserTrip({ selectedUserTrip })
-    );
-  }
+  // selectUserTrip(selectedUserTrip: TripsModel) {
+  //   this.stateStore.dispatch(
+  //     TripActions.setSelectedUserTrip({ selectedUserTrip })
+  //   );
+  // }
+
+  // reloadPage() {
+  //   location.reload();
+  // }
 }

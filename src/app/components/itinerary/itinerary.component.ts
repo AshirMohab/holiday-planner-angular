@@ -1,8 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { select, State, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import ItineraryItem from 'src/app/models/itineraryItem';
 import TripsModel from 'src/app/models/tripsModel';
-import * as ItineraryActions from 'src/app/store/itinerary/itinerary.actions';
+import { TripState } from 'src/app/store/trip/trip.reducer';
+
+import * as TripActions from 'src/app/store/trip/trip.actions';
+import * as TripSelectors from 'src/app/store/trip/trip.selectors';
 
 @Component({
   selector: 'app-itinerary',
@@ -14,9 +18,19 @@ export class ItineraryComponent implements OnInit {
   isShowingItinerary: boolean = true;
   isEditingItinerary: boolean = false;
 
-  tripItineraryResponse!: Observable<ItineraryItem[]>;
+  // tripItineraryResponse!: Observable<ItineraryItem[]>;
 
-  constructor() {}
+  selectedTrip$!: Observable<TripsModel>;
+  @Input() selectedTrip!: TripsModel | null;
 
-  ngOnInit(): void {}
+  startDate: Date = new Date();
+  endDate: Date = new Date();
+
+  constructor(private tripStore: Store<TripState>) {}
+
+  ngOnInit(): void {
+    this.selectedTrip$ = this.tripStore.pipe(
+      select(TripSelectors.selectSelectedUserTrip)
+    );
+  }
 }

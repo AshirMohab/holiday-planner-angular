@@ -59,10 +59,11 @@ export class TripEffects {
 
   tripUpdate$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(TripActions.updateTrip),
+      ofType(TripActions.updateUserTrip),
       concatMap(({ trip }) =>
         this.tripService.editUserTrip(trip).pipe(
           map(() => TripActions.getUserTrips()),
+
           catchError((error) => {
             this.notificationService.error(
               `Sorry, couldn't update trip.`,

@@ -7,7 +7,7 @@ import ItineraryItem from 'src/app/models/itineraryItem';
   styleUrls: ['./calander.component.scss'],
 })
 export class CalanderComponent implements OnInit {
-  @Input() itineraries!: ItineraryItem[];
+  @Input() itineraries!: ItineraryItem[] | null;
   @Input() tripStartDate!: Date;
   @Input() tripEndDate!: Date;
 

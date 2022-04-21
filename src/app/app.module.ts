@@ -45,6 +45,8 @@ import { MyItinerariesComponent } from './components/itinerary/my-itineraries/my
 import { AddItineraryComponent } from './components/itinerary/add-itinerary/add-itinerary.component';
 
 import * as fromUser from './store/user/user.reducer';
+import * as fromCurrency from './store/currency/currency.reducer';
+import { CurrencyEffects } from './store/currency/currency.effects';
 
 registerLocaleData(en);
 
@@ -54,20 +56,20 @@ registerLocaleData(en);
     ComponentsComponent,
     LoginComponent,
     RegisterComponent,
-    MyTripsComponent,
-    TripComponent,
+    // MyTripsComponent,
+
     UserComponent,
-    ItineraryComponent,
+    // ItineraryComponent,
     NotFoundComponent,
     EditDetailsComponent,
-    AddTripsComponent,
-    ListOfTripsComponent,
+    // AddTripsComponent,
+    // ListOfTripsComponent,
     TripPipePipe,
     ItineraryPipePipe,
-    EditTripsComponent,
-    CalanderComponent,
-    MyItinerariesComponent,
-    AddItineraryComponent,
+    // EditTripsComponent,
+    // CalanderComponent,
+    // MyItinerariesComponent,
+    // AddItineraryComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,10 +91,15 @@ registerLocaleData(en);
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forFeature([TripEffects]),
+    EffectsModule.forFeature([TripEffects, CurrencyEffects]),
     StoreModule.forFeature(fromTrip.tripFeatureKey, fromTrip.reducer),
 
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
+
+    StoreModule.forFeature(
+      fromCurrency.currencyFeatureKey,
+      fromCurrency.reducer
+    ),
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, AuthService],
   bootstrap: [AppComponent],

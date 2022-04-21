@@ -13,12 +13,15 @@ import { EditTripsComponent } from './components/my-trips/edit-trips/edit-trips.
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [SignInGuardGuard] },
   { path: 'register', component: RegisterComponent },
+  // {
+  //   path: 'my-trips',
+  //   component: MyTripsComponent,
+  // },
+  { path: 'itineraries', component: ItineraryComponent },
   {
     path: 'my-trips',
-    component: MyTripsComponent,
-    children: [{ path: ':id', component: EditTripsComponent }],
+    loadChildren: () => import('./lazy/lazy.module').then((m) => m.LazyModule),
   },
-  { path: 'itineraries', component: ItineraryComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
 ];

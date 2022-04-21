@@ -107,30 +107,11 @@ export class TripService {
     return tripEdit.valueChanges();
   }
 
-  async removeUserTrip(tripID: string) {
-    await deleteDoc(doc(this.fireStore, 'Trips', tripID));
-    this.notificationService.success('User has been removed', 'true');
-  }
-
-  async addTripItinerary(itinerary: ItineraryItem) {
-    this.angularFireStore.collection('Itinerary').add({
-      ...itinerary,
-      tripID: this.angularFireStore.createId(),
-    });
-  }
-
-  async editItinerary(itinerary: ItineraryItem, itineraryID: string) {
-    await setDoc(doc(this.fireStore, 'Itinerary', itineraryID), {
-      name: itinerary.name,
-      tag: itinerary.tag,
-      startDate: itinerary.startDate,
-      endDate: itinerary.endDate,
-      costEstimate: itinerary.costEstimate,
-      startLocationLat: itinerary.startLocationLat,
-      startLocationLong: itinerary.startLocationLong,
-      endLocationLat: itinerary.endLocationLat,
-      endLocationLong: itinerary.endLocationLong,
-      notes: itinerary.notes,
-    });
+  removeUserTrip(tripID: string) {
+    const tripCollection = this.angularFireStore.collection<TripsModel>(
+      'Trips',
+      (ref) => ref.where('tripID', '==', tripID)
+    );
+    return from(tripCollection.doc(tripID).delete());
   }
 }

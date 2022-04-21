@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { CurrencyData } from 'src/app/models/currency';
 import TripsModel from 'src/app/models/tripsModel';
 import User from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { addUserTrip } from 'src/app/store/trip/trip.actions';
 import { TripState } from 'src/app/store/trip/trip.reducer';
-import { selectUserTrips } from 'src/app/store/trip/trip.selectors';
 
 @Component({
   selector: 'app-add-trips',
@@ -17,11 +17,11 @@ import { selectUserTrips } from 'src/app/store/trip/trip.selectors';
 export class AddTripsComponent implements OnInit {
   addTripForm!: FormGroup;
   addTripResponse$!: Observable<TripsModel>;
+  @Input() currencyRates!: CurrencyData;
 
   user: User = JSON.parse(localStorage.getItem('user')!);
 
   constructor(
-    private userTrips: UserService,
     private formBuilder: FormBuilder,
     private tripStore: Store<TripState>
   ) {}

@@ -1,6 +1,8 @@
-<div class="grid grid-cols-2 grid-rows-2 m-3 gap-3">
+<div
+  class="md:grid md:grid-cols-2 md:grid-rows-2 m-3 gap-3 sm:flex-col sm:grid-cols-1"
+>
   <div
-    class="h-40 bg-slate-100 rounded-md p-5 hover:shadow-2xl hover:scale-105 duration-500 px-5"
+    class="h-50 bg-slate-100 rounded-md p-5 hover:shadow-2xl hover:scale-105 duration-500 px-5"
     *ngFor="let itins of itinerary"
   >
     <p class="text-base text-colour">
@@ -20,5 +22,11 @@
         {{ itins.endDate }}
       </p>
     </div>
+    <button
+      class="text-white bg-red-300 rounded-md w-full h-10 teritary-button mt-2"
+      type="submit"
+    >
+      Edit item
+    </button>
   </div>
 </div>

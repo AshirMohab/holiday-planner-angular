@@ -26,8 +26,6 @@ export class TripEffects {
       withLatestFrom(this.userStore.pipe(select(selectCurrentUser))),
       concatMap(([action, currentUser]) => {
         // const currentUser = { uid: 'yDYYtFyxd3QqkA9FTevxOOC7Suy2' };
-        console.log(action);
-        console.log(currentUser);
         if (!currentUser) return EMPTY;
         return this.tripService.getUserTrips(currentUser?.uid).pipe(
           map((userTrips) => TripActions.getUserTripsCompleted({ userTrips })),

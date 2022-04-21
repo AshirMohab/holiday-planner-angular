@@ -42,7 +42,6 @@ export class TripService {
   }
 
   getUserTrips(userID: string): Observable<TripsModel[]> {
-    console.log(userID);
     if (!userID) {
       return EMPTY;
     }

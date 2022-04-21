@@ -13,6 +13,7 @@ import { updateUserTrip } from 'src/app/store/trip/trip.actions';
 import { TripState } from 'src/app/store/trip/trip.reducer';
 import * as TripActions from 'src/app/store/trip/trip.actions';
 import * as TripSelectors from 'src/app/store/trip/trip.selectors';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-trips',
@@ -24,12 +25,18 @@ export class EditTripsComponent implements OnInit {
   editTripForm!: FormGroup;
   @Input() selectedTrip!: TripsModel | null;
   selectedTrip$!: Observable<TripsModel>;
+  selectedTripID = '';
 
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private tripStore: Store<TripState>
-  ) {}
+    private tripStore: Store<TripState>,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(
+      (params) => (this.selectedTripID = params?.['tripID'])
+    );
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -69,6 +76,9 @@ export class EditTripsComponent implements OnInit {
     };
 
     this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));
+    setInterval(function () {
+      window.location.reload();
+    }, 500);
     // this.rehydrateTrips();
   }
 

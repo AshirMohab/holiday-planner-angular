@@ -8,6 +8,7 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import { SignInGuardGuard } from './guards/sign-in-guard.guard';
 import { ItineraryComponent } from './components/itinerary/itinerary.component';
+import { EditTripsComponent } from './components/my-trips/edit-trips/edit-trips.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [SignInGuardGuard] },
@@ -15,7 +16,7 @@ const routes: Routes = [
   {
     path: 'my-trips',
     component: MyTripsComponent,
-    children: [{ path: ':id', component: TripComponent }],
+    children: [{ path: ':id', component: EditTripsComponent }],
   },
   { path: 'itineraries', component: ItineraryComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },

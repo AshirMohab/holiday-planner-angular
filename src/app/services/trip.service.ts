@@ -3,11 +3,12 @@ import { user } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
+  DocumentChangeAction,
   DocumentReference,
 } from '@angular/fire/compat/firestore';
 import { deleteDoc, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { EMPTY, from, mergeMap, Observable, retry } from 'rxjs';
+import { EMPTY, from, map, mergeMap, Observable, retry } from 'rxjs';
 import ItineraryItem from '../models/itineraryItem';
 import TripsModel from '../models/tripsModel';
 
@@ -52,6 +53,30 @@ export class TripService {
       .valueChanges();
   }
 
+  getTripId(trip: TripsModel) {
+    return this.angularFireStore
+      .collection<TripsModel>('Trips', (ref) =>
+        ref.where('tripID', '==', trip.tripID).limit(1)
+      )
+      .snapshotChanges()
+      .pipe(
+        map((actions: DocumentChangeAction<TripsModel>[]) => {
+          if (actions.length === 0) return null;
+          return actions[0].payload.doc.id;
+        })
+      );
+  }
+
+  updateTripById(trip: TripsModel, id: string) {
+    if (id?.length === 0) return EMPTY;
+    return from(
+      this.angularFireStore
+        .collection('Trips')
+        .doc(id)
+        .update({ ...trip })
+    );
+  }
+
   getTripItinerary(tripID: string): Observable<ItineraryItem[]> {
     const itineraryCollection = this.angularFireStore.collection<ItineraryItem>(
       'Itinerary',
@@ -66,16 +91,19 @@ export class TripService {
       ref.where('tripID', '==', trip.tripID)
     );
 
-    tripEdit.snapshotChanges().subscribe((res) => {
-      if (!!res) {
-        let id = res[0].payload.doc.id;
+    tripEdit
+      .snapshotChanges()
+      .subscribe((res) => {
+        if (!!res) {
+          let id = res[0].payload.doc.id;
 
-        this.angularFireStore
-          .collection('Trips')
-          .doc(id)
-          .update({ ...trip });
-      }
-    });
+          this.angularFireStore
+            .collection('Trips')
+            .doc(id)
+            .update({ ...trip });
+        }
+      })
+      .unsubscribe();
     return tripEdit.valueChanges();
   }
 

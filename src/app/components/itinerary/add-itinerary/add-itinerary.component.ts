@@ -67,9 +67,6 @@ export class AddItineraryComponent implements OnInit {
         itinerary: [...this.selectedTrip.itinerary, newTripItinerary],
       };
       this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));
-      setInterval(function () {
-        window.location.reload();
-      }, 500);
     }
   }
 }

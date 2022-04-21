@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap, withLatestFrom } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  concatMap,
+  withLatestFrom,
+  first,
+} from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
 
 import * as TripActions from './trip.actions';
@@ -60,10 +66,36 @@ export class TripEffects {
   tripUpdate$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(TripActions.updateUserTrip),
-      concatMap(({ trip }) =>
-        this.tripService.editUserTrip(trip).pipe(
-          map(() => TripActions.getUserTrips()),
+      concatMap((action) =>
+        this.tripService.getTripId(action.trip).pipe(
+          first(),
+          map((res) => {
+            if (!res) throw new Error('ID Not Found');
 
+            return TripActions.updateUserTripById({
+              trip: action.trip,
+              tripDBId: res,
+            });
+          }),
+          catchError((error) => {
+            this.notificationService.error(
+              `Unable to update trip.`,
+              error.toString(),
+              { nzDuration: 0 }
+            );
+            return EMPTY;
+          })
+        )
+      )
+    );
+  });
+
+  tripUpdateById$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TripActions.updateUserTripById),
+      concatMap((action) =>
+        this.tripService.updateTripById(action.trip, action.tripDBId).pipe(
+          map(() => TripActions.getUserTrips()),
           catchError((error) => {
             this.notificationService.error(
               `Unable to update trip.`,

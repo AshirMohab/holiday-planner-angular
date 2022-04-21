@@ -76,9 +76,9 @@ export class EditTripsComponent implements OnInit {
     };
 
     this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));
-    setInterval(function () {
-      window.location.reload();
-    }, 500);
+    // setInterval(function () {
+    //   window.location.reload();
+    // }, 500);
     // this.rehydrateTrips();
   }
 

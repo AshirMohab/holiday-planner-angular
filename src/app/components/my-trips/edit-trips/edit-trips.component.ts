@@ -78,21 +78,4 @@ export class EditTripsComponent implements OnInit {
 
     this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));
   }
-
-  removeTrip() {
-    const removeTrip: TripsModel = {
-      tripID: this.selectedTrip?.tripID || '',
-      userID: this.selectedTrip?.userID || '',
-      name: this.editTripForm.value.tripName,
-      description: this.editTripForm.value.description,
-      currency: this.editTripForm.value.currency,
-      userEmail: this.editTripForm.value.email,
-      itinerary: this.selectedTrip?.itinerary || [],
-    };
-    this.tripStore.dispatch(
-      removeUserTrip({
-        trip: removeTrip,
-      })
-    );
-  }
 }

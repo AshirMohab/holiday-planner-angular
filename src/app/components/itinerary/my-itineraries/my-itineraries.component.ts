@@ -6,11 +6,7 @@ import ItineraryItem from 'src/app/models/itineraryItem';
   templateUrl: './my-itineraries.component.html',
   styleUrls: ['./my-itineraries.component.scss'],
 })
-export class MyItinerariesComponent implements OnInit {
+export class MyItinerariesComponent {
   @Input() itinerary!: ItineraryItem[] | null;
   @Input() currency!: string | undefined;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

@@ -11,6 +11,9 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @NgModule({
   declarations: [],
@@ -28,6 +31,9 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
     NzIconModule,
     NzCalendarModule,
     NzBadgeModule,
+    NzLayoutModule,
+    NzCardModule,
+    NzButtonModule,
   ],
   exports: [
     FormsModule,
@@ -42,6 +48,9 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
     NzIconModule,
     NzCalendarModule,
     NzBadgeModule,
+    NzLayoutModule,
+    NzCardModule,
+    NzButtonModule,
   ],
 })
 export class SharedModule {}

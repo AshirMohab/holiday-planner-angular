@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { CurrencyData } from 'src/app/models/currency';
 import TripsModel from 'src/app/models/tripsModel';
 import User from 'src/app/models/user';
-import { UserService } from 'src/app/services/user.service';
+import { addUserTrip } from 'src/app/store/trip/trip.actions';
+import { TripState } from 'src/app/store/trip/trip.reducer';
 
 @Component({
   selector: 'app-add-trips',
@@ -11,12 +15,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddTripsComponent implements OnInit {
   addTripForm!: FormGroup;
+  addTripResponse$!: Observable<TripsModel>;
+  @Input() currencyRates!: CurrencyData;
 
   user: User = JSON.parse(localStorage.getItem('user')!);
 
   constructor(
-    private userTrips: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private tripStore: Store<TripState>
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +34,6 @@ export class AddTripsComponent implements OnInit {
       tripName: [''],
       description: [''],
       currency: [''],
-      tripCost: 0,
     });
   }
 
@@ -41,14 +46,15 @@ export class AddTripsComponent implements OnInit {
   }
 
   addNewTrip() {
-    const tripData: TripsModel = {
+    const newTrip: TripsModel = {
       tripID: '',
+      userID: '',
       name: this.addTripForm.value.tripName,
       description: this.addTripForm.value.description,
       currency: this.addTripForm.value.currency,
       userEmail: this.user.email,
       itinerary: [],
     };
-    this.userTrips.addUserTrip(tripData);
+    this.tripStore.dispatch(addUserTrip({ newTrip }));
   }
 }

@@ -1,22 +1,27 @@
-<div class="w-full h-[700px] bg-slate-100 rounded-xl overflow-x-auto px-5">
-  <div *ngIf="!itineraries?.length">
-    <nz-calendar nzFullscreen="true" [(ngModel)]="chosenDate">
-      <ul *nzDateCell="let date">
-        <!-- To Show Their Holiday Plans (hence the date they can add itenaries on)-->
-        <ng-container
-          *ngIf="date >= startDate && date <= endDate"
-          class="bg-blue-400"
-        >
-          <div
-            class="bg-dark-blue bg-opacity-80 w-screen h-fit min-h-screen"
-          ></div>
-        </ng-container>
-      </ul>
-    </nz-calendar>
-  </div>
-  <div *ngIf="itineraries?.length" class="py-5">
-    <h1 class="text-2xl text-center text-dark-blue mb-3">
-      No itinerary items for this trip
-    </h1>
-  </div>
-</div>
+<nz-calendar>
+  <ul *nzDateCell="let date" class="events">
+    <ng-container [ngSwitch]="date.getDate()">
+      <ng-container *ngSwitchCase="8">
+        <li *ngFor="let itin of itinerary">
+          <nz-badge [nzStatus]="itin.tag" [nzText]="itin.notes"></nz-badge>
+        </li>
+      </ng-container>
+      <ng-container *ngSwitchCase="10">
+        <li *ngFor="let itin of itinerary">
+          <nz-badge [nzStatus]="itin.tag" [nzText]="itin.notes"></nz-badge>
+        </li>
+      </ng-container>
+      <ng-container *ngSwitchCase="11">
+        <li *ngFor="let itin of itinerary">
+          <nz-badge [nzStatus]="itin.tag" [nzText]="itin.notes"></nz-badge>
+        </li>
+      </ng-container>
+    </ng-container>
+  </ul>
+  <ng-container *nzMonthCell="let month">
+    <div *ngIf="getMonthData(month) as monthData" class="notes-month">
+      <section>{{ monthData }}</section>
+      <span>Backlog number</span>
+    </div>
+  </ng-container>
+</nz-calendar>

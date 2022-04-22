@@ -8,16 +8,16 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import { SignInGuardGuard } from './guards/sign-in-guard.guard';
 import { ItineraryComponent } from './components/itinerary/itinerary.component';
+import { EditTripsComponent } from './components/my-trips/edit-trips/edit-trips.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [SignInGuardGuard] },
   { path: 'register', component: RegisterComponent },
+
   {
     path: 'my-trips',
-    component: MyTripsComponent,
-    children: [{ path: ':id', component: TripComponent }],
+    loadChildren: () => import('./lazy/lazy.module').then((m) => m.LazyModule),
   },
-  { path: 'itineraries', component: ItineraryComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
 ];

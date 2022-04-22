@@ -1,1 +1,26 @@
-<p>my-itineraries works!</p>
+<div
+  class="md:grid md:grid-cols-2 md:grid-rows-2 m-3 gap-3 sm:flex-col sm:grid-cols-1"
+>
+  <div
+    class="h-50 bg-slate-100 rounded-md p-5 hover:shadow-2xl hover:scale-105 duration-500 px-5"
+    *ngFor="let itins of itinerary"
+  >
+    <p class="text-base text-colour">
+      {{ itins.name }}
+    </p>
+    <p class="text-base text-colour mt-2">
+      {{ currency }} {{ itins.costEstimate }}
+    </p>
+    <div class="flex justify-around mt-5 items-center">
+      <p class="font-mono">
+        {{ itins.notes }}
+      </p>
+      <p class="font-mono">
+        {{ itins.startDate }}
+      </p>
+      <p class="font-mono">
+        {{ itins.endDate }}
+      </p>
+    </div>
+  </div>
+</div>

@@ -6,6 +6,7 @@ import { TripState } from 'src/app/store/trip/trip.reducer';
 import * as TripActions from 'src/app/store/trip/trip.actions';
 import * as TripSelectors from 'src/app/store/trip/trip.selectors';
 import { Observable } from 'rxjs';
+import { removeUserTrip } from 'src/app/store/trip/trip.actions';
 
 @Component({
   selector: 'app-trip',
@@ -29,6 +30,14 @@ export class TripComponent implements OnInit {
   selectUserTrip(selectedUserTrip: TripsModel) {
     this.stateStore.dispatch(
       TripActions.setSelectedUserTrip({ selectedUserTrip })
+    );
+  }
+
+  removeTrip() {
+    this.stateStore.dispatch(
+      removeUserTrip({
+        trip: this.trip,
+      })
     );
   }
 }

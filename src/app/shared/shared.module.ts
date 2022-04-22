@@ -9,6 +9,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzCalendarModule } from 'ng-zorro-antd/calendar';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 @NgModule({
   declarations: [],
@@ -24,6 +26,8 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
     NzSwitchModule,
     NzNotificationModule,
     NzIconModule,
+    NzCalendarModule,
+    NzBadgeModule,
   ],
   exports: [
     FormsModule,
@@ -36,6 +40,8 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
     NzSwitchModule,
     NzNotificationModule,
     NzIconModule,
+    NzCalendarModule,
+    NzBadgeModule,
   ],
 })
 export class SharedModule {}

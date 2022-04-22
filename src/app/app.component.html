@@ -1,27 +1,33 @@
 <nz-layout>
-  <nz-header>
-    <nav class="navbar" role="banner" *ngIf="!!(userLogin$ | async)">
-      <ul>
-        <li *ngFor="let navLink of navLinks; trackBy: identifyLinks">
-          <a
-            [routerLink]="navLink.routerLink"
-            [routerLinkActive]="navLink.activeRouterLink"
-            >{{ navLink.displayName }}</a
-          >
-        </li>
-        <li
-          *ngIf="!!(userLogin$ | async)"
-          nz-submenu
-          nzOpen
-          nzTitle="Logout"
-          nzIcon="user"
-        ></li>
-      </ul>
-      <li nz-menu-item nzMatchRouter>
-        <button (click)="signOut()" nz-button nzType="primary">Sign Out</button>
+  <nav class="navbar" role="banner" *ngIf="!!(userLogin$ | async)">
+    <ul>
+      <li *ngFor="let navLink of navLinks; trackBy: identifyLinks">
+        <a
+          [routerLink]="navLink.routerLink"
+          [routerLinkActive]="navLink.activeRouterLink"
+          >{{ navLink.displayName }}</a
+        >
       </li>
-    </nav>
-  </nz-header>
+      <li
+        *ngIf="!!(userLogin$ | async)"
+        nz-submenu
+        nzOpen
+        nzTitle="Logout"
+        nzIcon="user"
+      ></li>
+      <li nz-menu-item nzMatchRouter class="m-4 gap-3">
+        <button
+          (click)="signOut()"
+          nz-button
+          nzType="primary"
+          class="rounded-xl"
+        >
+          Sign Out
+        </button>
+      </li>
+    </ul>
+  </nav>
+
   <nz-content>
     <div class="container">
       <router-outlet></router-outlet>

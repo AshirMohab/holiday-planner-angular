@@ -20,11 +20,6 @@ export class MyTripsComponent implements OnInit {
   selectedTrip$!: Observable<TripsModel>;
   user: User = JSON.parse(localStorage.getItem('user')!);
 
-  isAddingTrip: boolean = false;
-  addingTrip: boolean = false;
-  isShowingTrips: boolean = true;
-  isEditTrips: boolean = false;
-
   constructor(private stateStore: Store<TripState>) {}
 
   ngOnInit(): void {

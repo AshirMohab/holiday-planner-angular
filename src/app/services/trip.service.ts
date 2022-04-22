@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { user } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
   DocumentChangeAction,
   DocumentReference,
 } from '@angular/fire/compat/firestore';
-import { deleteDoc, doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { EMPTY, from, map, mergeMap, Observable, retry } from 'rxjs';
+import { EMPTY, from, map, mergeMap, Observable } from 'rxjs';
 import ItineraryItem from '../models/itineraryItem';
 import TripsModel from '../models/tripsModel';
 
@@ -28,16 +27,14 @@ export class TripService {
       this.angularFireAuth.currentUser.then((currentUser) => currentUser?.uid)
     ).pipe(
       mergeMap((uid) => {
-        if (uid) {
-          return from(
-            this.angularFireStore.collection<TripsModel>('Trips').add({
-              ...newTrip,
-              userID: uid,
-              tripID: this.angularFireStore.createId(),
-            })
-          );
-        }
-        return EMPTY;
+        if (!uid) return EMPTY;
+        return from(
+          this.angularFireStore.collection<TripsModel>('Trips').add({
+            ...newTrip,
+            userID: uid,
+            tripID: this.angularFireStore.createId(),
+          })
+        );
       })
     );
   }
@@ -53,7 +50,9 @@ export class TripService {
       .valueChanges();
   }
 
-  getTripId(trip: TripsModel) {
+  getTripId(trip: TripsModel): Observable<string | null> {
+    //Gets the ID of the trip document
+
     return this.angularFireStore
       .collection<TripsModel>('Trips', (ref) =>
         ref.where('tripID', '==', trip.tripID).limit(1)
@@ -67,7 +66,7 @@ export class TripService {
       );
   }
 
-  updateTripById(trip: TripsModel, id: string) {
+  updateTripById(trip: TripsModel, id: string): Observable<void> {
     if (id?.length === 0) return EMPTY;
     return from(
       this.angularFireStore
@@ -86,32 +85,8 @@ export class TripService {
     return itineraryCollection.valueChanges();
   }
 
-  editUserTrip(trip: TripsModel) {
-    const tripEdit = this.angularFireStore.collection('Trips', (ref) =>
-      ref.where('tripID', '==', trip.tripID)
-    );
-
-    tripEdit
-      .snapshotChanges()
-      .subscribe((res) => {
-        if (!!res) {
-          let id = res[0].payload.doc.id;
-
-          this.angularFireStore
-            .collection('Trips')
-            .doc(id)
-            .update({ ...trip });
-        }
-      })
-      .unsubscribe();
-    return tripEdit.valueChanges();
-  }
-
-  removeUserTrip(tripID: string) {
-    const tripCollection = this.angularFireStore.collection<TripsModel>(
-      'Trips',
-      (ref) => ref.where('tripID', '==', tripID)
-    );
-    return from(tripCollection.doc(tripID).delete());
+  removeUserTrip(tripID: string): Observable<void> {
+    if (tripID?.length === 0) return EMPTY;
+    return from(this.angularFireStore.collection('Trips').doc(tripID).delete());
   }
 }

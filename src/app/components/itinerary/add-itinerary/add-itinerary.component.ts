@@ -3,8 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import ItineraryItem from 'src/app/models/itineraryItem';
 import TripsModel from 'src/app/models/tripsModel';
-import { TripService } from 'src/app/services/trip.service';
-import { UserService } from 'src/app/services/user.service';
 import { updateUserTrip } from 'src/app/store/trip/trip.actions';
 import { TripState } from 'src/app/store/trip/trip.reducer';
 
@@ -18,7 +16,6 @@ export class AddItineraryComponent implements OnInit {
   @Input() selectedTrip!: TripsModel | null;
 
   constructor(
-    private tripService: TripService,
     private formBuilder: FormBuilder,
     private tripStore: Store<TripState>
   ) {}
@@ -59,11 +56,6 @@ export class AddItineraryComponent implements OnInit {
     if (this.selectedTrip) {
       const newTrip: TripsModel = {
         ...this.selectedTrip,
-        // tripID: this.selectedTrip?.tripID || '',
-        // name: this.selectedTrip?.name || '',
-        // description: this.selectedTrip?.description || '',
-        // currency: this.selectedTrip?.currency || '',
-        // userEmail: this.selectedTrip?.userEmail || '',
         itinerary: [...this.selectedTrip.itinerary, newTripItinerary],
       };
       this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));

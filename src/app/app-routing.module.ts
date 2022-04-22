@@ -13,11 +13,7 @@ import { EditTripsComponent } from './components/my-trips/edit-trips/edit-trips.
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [SignInGuardGuard] },
   { path: 'register', component: RegisterComponent },
-  // {
-  //   path: 'my-trips',
-  //   component: MyTripsComponent,
-  // },
-  { path: 'itineraries', component: ItineraryComponent },
+
   {
     path: 'my-trips',
     loadChildren: () => import('./lazy/lazy.module').then((m) => m.LazyModule),

@@ -1,11 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CurrencyData } from 'src/app/models/currency';
 import TripsModel from 'src/app/models/tripsModel';
 import User from 'src/app/models/user';
-import { UserService } from 'src/app/services/user.service';
 import { addUserTrip } from 'src/app/store/trip/trip.actions';
 import { TripState } from 'src/app/store/trip/trip.reducer';
 

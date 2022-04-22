@@ -30,7 +30,12 @@ export const updateUserTripById = createAction(
 
 export const removeUserTrip = createAction(
   '[Trip] removeUserTrip',
-  props<{ tripToRemove: TripsModel }>()
+  props<{ trip: TripsModel }>()
+);
+
+export const removeUserTripByID = createAction(
+  '[Trip] removeUserTripByID',
+  props<{ trip: TripsModel; tripID: string }>()
 );
 
 export const removeTripItinerary = createAction(

@@ -100,7 +100,6 @@ export class AuthService {
     this.authorize
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
-        this.ngZone.run(() => {});
         this.loginSuccess = true;
       })
       .catch((err: Error) => {

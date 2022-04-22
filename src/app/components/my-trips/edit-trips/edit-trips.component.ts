@@ -8,10 +8,12 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import TripsModel from 'src/app/models/tripsModel';
-import { UserService } from 'src/app/services/user.service';
-import { updateUserTrip } from 'src/app/store/trip/trip.actions';
+import {
+  updateUserTrip,
+  removeUserTripByID,
+  removeUserTrip,
+} from 'src/app/store/trip/trip.actions';
 import { TripState } from 'src/app/store/trip/trip.reducer';
-import * as TripActions from 'src/app/store/trip/trip.actions';
 import * as TripSelectors from 'src/app/store/trip/trip.selectors';
 import { ActivatedRoute } from '@angular/router';
 
@@ -28,7 +30,6 @@ export class EditTripsComponent implements OnInit {
   selectedTripID = '';
 
   constructor(
-    private userService: UserService,
     private formBuilder: FormBuilder,
     private tripStore: Store<TripState>,
     private route: ActivatedRoute
@@ -76,13 +77,22 @@ export class EditTripsComponent implements OnInit {
     };
 
     this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));
-    // setInterval(function () {
-    //   window.location.reload();
-    // }, 500);
-    // this.rehydrateTrips();
   }
 
-  rehydrateTrips() {
-    this.tripStore.dispatch(TripActions.getUserTrips());
+  removeTrip() {
+    const removeTrip: TripsModel = {
+      tripID: this.selectedTrip?.tripID || '',
+      userID: this.selectedTrip?.userID || '',
+      name: this.editTripForm.value.tripName,
+      description: this.editTripForm.value.description,
+      currency: this.editTripForm.value.currency,
+      userEmail: this.editTripForm.value.email,
+      itinerary: this.selectedTrip?.itinerary || [],
+    };
+    this.tripStore.dispatch(
+      removeUserTrip({
+        trip: removeTrip,
+      })
+    );
   }
 }

@@ -18,7 +18,6 @@ export class MyTripsComponent implements OnInit {
   currencyResponse$!: Observable<CurrencyResponse>;
   myTripsResponse$!: Observable<TripsModel[]>;
   selectedTrip$!: Observable<TripsModel>;
-  // destroy$ = new Subject<boolean>();
   user: User = JSON.parse(localStorage.getItem('user')!);
 
   isAddingTrip: boolean = false;
@@ -29,7 +28,6 @@ export class MyTripsComponent implements OnInit {
   constructor(private stateStore: Store<TripState>) {}
 
   ngOnInit(): void {
-    // this.currencyResponse$ = this.currency.getCurrency();
     this.myTripsResponse$ = this.stateStore.pipe(
       select(TripSelectors.selectUserTrips)
     );

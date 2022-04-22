@@ -10,7 +10,6 @@ import {
 import { Observable, EMPTY, of } from 'rxjs';
 
 import * as TripActions from './trip.actions';
-import { UserService } from 'src/app/services/user.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { TripService } from 'src/app/services/trip.service';
 import { selectCurrentUser } from '../user/user.selectors';
@@ -25,7 +24,6 @@ export class TripEffects {
       ofType(TripActions.getUserTrips, setCurrenctUser),
       withLatestFrom(this.userStore.pipe(select(selectCurrentUser))),
       concatMap(([action, currentUser]) => {
-        // const currentUser = { uid: 'yDYYtFyxd3QqkA9FTevxOOC7Suy2' };
         if (!currentUser) return EMPTY;
         return this.tripService.getUserTrips(currentUser?.uid).pipe(
           map((userTrips) => TripActions.getUserTripsCompleted({ userTrips })),
@@ -61,15 +59,14 @@ export class TripEffects {
     );
   });
 
-  tripUpdate$ = createEffect(() => {
+  updateUserTrip$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(TripActions.updateUserTrip),
-      concatMap((action) =>
-        this.tripService.getTripId(action.trip).pipe(
+      concatMap((action) => {
+        return this.tripService.getTripId(action.trip).pipe(
           first(),
           map((res) => {
-            if (!res) throw new Error('ID Not Found');
-
+            if (!res) throw new Error(`Unable to find trip for editing`);
             return TripActions.updateUserTripById({
               trip: action.trip,
               tripDBId: res,
@@ -77,14 +74,14 @@ export class TripEffects {
           }),
           catchError((error) => {
             this.notificationService.error(
-              `Unable to update trip.`,
+              `Unable to update that trip for editing.`,
               error.toString(),
               { nzDuration: 0 }
             );
             return EMPTY;
           })
-        )
-      )
+        );
+      })
     );
   });
 
@@ -110,8 +107,34 @@ export class TripEffects {
   removeUserTrip$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(TripActions.removeUserTrip),
-      concatMap(({ tripToRemove }) =>
-        this.tripService.editUserTrip(tripToRemove).pipe(
+      concatMap((action) => {
+        return this.tripService.getTripId(action.trip).pipe(
+          first(),
+          map((res) => {
+            if (!res) throw new Error(`Unable to find trip for editing`);
+            return TripActions.removeUserTripByID({
+              trip: action.trip,
+              tripID: res,
+            });
+          }),
+          catchError((error) => {
+            this.notificationService.error(
+              `Unable to update that trip for editing.`,
+              error.toString(),
+              { nzDuration: 0 }
+            );
+            return EMPTY;
+          })
+        );
+      })
+    );
+  });
+
+  removeUserTripByID$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TripActions.removeUserTripByID),
+      concatMap(({ tripID }) =>
+        this.tripService.removeUserTrip(tripID).pipe(
           map(() => TripActions.getUserTrips()),
           catchError((error) => {
             this.notificationService.error(
@@ -126,30 +149,10 @@ export class TripEffects {
     );
   });
 
-  removetripItinerary$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(TripActions.removeTripItinerary),
-      concatMap(({ trip }) =>
-        this.tripService.editUserTrip(trip).pipe(
-          map(() => TripActions.getUserTrips()),
-          catchError((error) => {
-            this.notificationService.error(
-              'Unable to remove itinerary item from trip.',
-              error.toString(),
-              { nzDuration: 0 }
-            );
-            return EMPTY;
-          })
-        )
-      )
-    );
-  });
-
   constructor(
     private actions$: Actions,
     private tripService: TripService,
     private notificationService: NzNotificationService,
-    private userService: UserService,
     private userStore: Store<UserState>
   ) {}
 }

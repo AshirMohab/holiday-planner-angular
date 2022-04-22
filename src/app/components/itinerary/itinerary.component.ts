@@ -1,11 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { select, State, Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import ItineraryItem from 'src/app/models/itineraryItem';
 import TripsModel from 'src/app/models/tripsModel';
 import { TripState } from 'src/app/store/trip/trip.reducer';
 
-import * as TripActions from 'src/app/store/trip/trip.actions';
 import * as TripSelectors from 'src/app/store/trip/trip.selectors';
 
 @Component({
@@ -17,8 +15,6 @@ export class ItineraryComponent implements OnInit {
   isAddingItinerary: boolean = false;
   isShowingItinerary: boolean = true;
   isEditingItinerary: boolean = false;
-
-  // tripItineraryResponse!: Observable<ItineraryItem[]>;
 
   selectedTrip$!: Observable<TripsModel>;
   @Input() selectedTrip!: TripsModel | null;

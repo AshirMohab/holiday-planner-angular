@@ -11,10 +11,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { ComponentsComponent } from './components/components.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
-import { MyTripsComponent } from './components/my-trips/my-trips.component';
-import { TripComponent } from './components/my-trips/list-of-trips/trip/trip.component';
 import { UserComponent } from './components/user/user.component';
-import { ItineraryComponent } from './components/itinerary/itinerary.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
@@ -35,14 +32,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as fromTrip from './store/trip/trip.reducer';
 import { TripEffects } from './store/trip/trip.effects';
 import { EditDetailsComponent } from './components/user/edit-details/edit-details.component';
-import { AddTripsComponent } from './components/my-trips/add-trips/add-trips.component';
-import { ListOfTripsComponent } from './components/my-trips/list-of-trips/list-of-trips.component';
 import { TripPipePipe } from './pipes/trip-pipe.pipe';
 import { ItineraryPipePipe } from './pipes/itinerary-pipe.pipe';
-import { EditTripsComponent } from './components/my-trips/edit-trips/edit-trips.component';
-import { CalanderComponent } from './components/itinerary/calander/calander.component';
-import { MyItinerariesComponent } from './components/itinerary/my-itineraries/my-itineraries.component';
-import { AddItineraryComponent } from './components/itinerary/add-itinerary/add-itinerary.component';
 
 import * as fromUser from './store/user/user.reducer';
 import * as fromCurrency from './store/currency/currency.reducer';
@@ -56,20 +47,12 @@ registerLocaleData(en);
     ComponentsComponent,
     LoginComponent,
     RegisterComponent,
-    // MyTripsComponent,
-
     UserComponent,
-    // ItineraryComponent,
     NotFoundComponent,
     EditDetailsComponent,
-    // AddTripsComponent,
-    // ListOfTripsComponent,
+
     TripPipePipe,
     ItineraryPipePipe,
-    // EditTripsComponent,
-    // CalanderComponent,
-    // MyItinerariesComponent,
-    // AddItineraryComponent,
   ],
   imports: [
     BrowserModule,

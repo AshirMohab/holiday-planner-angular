@@ -7,7 +7,10 @@
   <div
     class="md:grid md:grid-cols-3 gap-4 h-auto overflow-x-auto p-5 sm:grid sm:grid-cols-1 flew-wrap"
   >
-    <app-trip *ngFor="let trip of trips" [trip]="trip"></app-trip>
+    <app-trip
+      *ngFor="let trip of trips; trackBy: identifyTrips"
+      [trip]="trip"
+    ></app-trip>
   </div>
 </div>
 <div *ngIf="!trips?.length">

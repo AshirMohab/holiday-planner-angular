@@ -1,28 +1,32 @@
-<div class="grid grid-cols-1 flex-wrap flex-col p-3 m-4">
-  <nz-tabset>
-    <nz-tab nzTitle="My Trips">
-      <ng-container>
-        <app-list-of-trips
-          [trips]="myTripsResponse$ | async"
-        ></app-list-of-trips>
-      </ng-container>
-    </nz-tab>
-    <nz-tab nzTitle="Add Trip">
-      <ng-container>
-        <app-add-trips></app-add-trips>
-      </ng-container>
-    </nz-tab>
-    <nz-tab nzTitle="Edit Selected Trip">
-      <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
-        <app-edit-trips [selectedTrip]="selectedTrip$ | async"></app-edit-trips>
-      </ng-container>
-    </nz-tab>
-    <nz-tab nzTitle="View Selected Trip itinerary">
-      <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
-        <app-itinerary [selectedTrip]="selectedTrip$ | async"></app-itinerary>
-      </ng-container>
-    </nz-tab>
-    >
-  </nz-tabset>
-</div>
-<router-outlet></router-outlet>
+<nz-content>
+  <div class="grid grid-cols-1 flex-wrap flex-col p-3 m-4">
+    <nz-tabset>
+      <nz-tab nzTitle="My Trips">
+        <ng-container>
+          <app-list-of-trips
+            [trips]="myTripsResponse$ | async"
+          ></app-list-of-trips>
+        </ng-container>
+      </nz-tab>
+      <nz-tab nzTitle="Add Trip">
+        <ng-container>
+          <app-add-trips></app-add-trips>
+        </ng-container>
+      </nz-tab>
+      <nz-tab nzTitle="Edit Selected Trip">
+        <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
+          <app-edit-trips
+            [selectedTrip]="selectedTrip$ | async"
+          ></app-edit-trips>
+        </ng-container>
+      </nz-tab>
+      <nz-tab nzTitle="View Selected Trip itinerary">
+        <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
+          <app-itinerary [selectedTrip]="selectedTrip$ | async"></app-itinerary>
+        </ng-container>
+      </nz-tab>
+      >
+    </nz-tabset>
+  </div>
+  <router-outlet></router-outlet>
+</nz-content>

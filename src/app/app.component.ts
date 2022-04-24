@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
-import User from './models/user';
 import { AuthService } from './services/auth.service';
 import { UserState } from './store/user/user.reducer';
 import { selectCurrentUser } from './store/user/user.selectors';

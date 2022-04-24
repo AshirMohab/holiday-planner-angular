@@ -1,11 +1,9 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Component, Input } from '@angular/core';
+import { Store } from '@ngrx/store';
 import ItineraryItem from 'src/app/models/itineraryItem';
 import TripsModel from 'src/app/models/tripsModel';
 import { updateUserTrip } from 'src/app/store/trip/trip.actions';
 import { TripState } from 'src/app/store/trip/trip.reducer';
-import * as TripSelectors from 'src/app/store/trip/trip.selectors';
 
 @Component({
   selector: 'app-my-itineraries',

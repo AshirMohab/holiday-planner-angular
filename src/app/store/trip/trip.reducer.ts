@@ -1,4 +1,4 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import TripsModel from 'src/app/models/tripsModel';
 import * as TripActions from './trip.actions';
 

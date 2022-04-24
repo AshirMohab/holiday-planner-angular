@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CurrencyData, CurrencyResponse } from 'src/app/models/currency';
+import { CurrencyData } from 'src/app/models/currency';
 import TripsModel from 'src/app/models/tripsModel';
 import { TripState } from 'src/app/store/trip/trip.reducer';
 

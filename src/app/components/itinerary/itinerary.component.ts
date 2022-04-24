@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import ItineraryItem from 'src/app/models/itineraryItem';
 import TripsModel from 'src/app/models/tripsModel';
 import { TripState } from 'src/app/store/trip/trip.reducer';
 

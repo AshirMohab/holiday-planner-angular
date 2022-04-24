@@ -11,8 +11,9 @@ export class MyItinerariesComponent {
   @Input() currency!: string | undefined;
 
   colour: string = '';
-  identifyItins(index: number, itins: ItineraryItem) {
-    return itins.name;
+
+  identifyItins(index: number, itin: ItineraryItem) {
+    return itin.name;
   }
 
   setColourtag(itin: ItineraryItem) {

@@ -1,32 +1,36 @@
 <div class="grid grid-cols-2 gap-10 bg-white rounded-lg">
   <nz-calendar>
     <ul *nzDateCell="let date" class="events">
-      <ng-container [ngSwitch]="date.getDate()">
-        <ng-container *ngSwitchCase="">
-          <li *ngFor="let itin of itinerary">
-            <nz-badge [nzStatus]="itin.tag" [nzText]="itin.notes"></nz-badge>
-          </li>
-        </ng-container>
-        <ng-container *ngSwitchCase="10">
-          <li *ngFor="let itin of itinerary">
-            <nz-badge [nzStatus]="itin.tag" [nzText]="itin.notes"></nz-badge>
-          </li>
-        </ng-container>
-        <ng-container *ngSwitchCase="11">
-          <li *ngFor="let itin of itinerary">
-            <nz-badge [nzStatus]="itin.tag" [nzText]="itin.notes"></nz-badge>
-          </li>
-        </ng-container>
+      <ng-container>
+        <li *ngFor="let itin of itinerary">
+          <nz-badge [nzStatus]="itin.tag" [nzText]="itin.notes"></nz-badge>
+        </li>
       </ng-container>
     </ul>
-    <ng-container *nzMonthCell="let month">
-      <div *ngIf="getMonthData(month) as monthData" class="notes-month">
-        <section>{{ monthData }}</section>
-        <span>Backlog number</span>
-      </div>
-    </ng-container>
   </nz-calendar>
   <div class="gap-10 m-20 border-blue-500">
-    <app-my-itineraries [itinerary]="itinerary || null"> </app-my-itineraries>
+    <nz-timeline
+      *ngFor="let itin of itinerary; trackBy: identifyItins"
+      class="sm:flex-col"
+    >
+      <nz-timeline-item>
+        <p class="text-base text-colour">
+          {{ itin.name }}
+        </p>
+        <p class="font-mono">
+          {{ itin.notes }}
+        </p>
+
+        <p class="font-mono">
+          {{ itin.startDate }}
+        </p>
+        <p class="font-mono">
+          {{ itin.endDate }}
+        </p>
+        <nz-tag [nzColor]="setColourtag(itin)" class="font-mono">
+          {{ itin.tag }}
+        </nz-tag>
+      </nz-timeline-item>
+    </nz-timeline>
   </div>
 </div>

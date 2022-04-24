@@ -1,9 +1,9 @@
-<!-- <div
-  class="md:grid md:grid-cols-2 md:grid-rows-2 m-3 gap-3 sm:flex-col sm:grid-cols-1"
+<div
+  class="md:grid md:grid-cols-2 md:grid-rows-2 m-3 gap-10 sm:flex-col sm:grid-cols-1"
 >
   <div
-    class="h-60 bg-white rounded-md p-5 hover:shadow-2xl hover:scale-105 duration-500 px-5"
-    *ngFor="let itins of itinerary"
+    class="h-40 bg-white rounded-md p-5 hover:shadow-2xl hover:scale-105 duration-500 px-5"
+    *ngFor="let itins of itinerary; trackBy: identifyItins"
   >
     <p class="text-base text-colour">
       {{ itins.name }}
@@ -26,9 +26,9 @@
       </p>
     </div>
   </div>
-</div> -->
+</div>
 
-<nz-timeline
+<!-- <nz-timeline
   *ngFor="let itin of itinerary; trackBy: identifyItins"
   class="sm:flex-col"
 >
@@ -52,4 +52,4 @@
       {{ itin.tag }}
     </nz-tag>
   </nz-timeline-item>
-</nz-timeline>
+</nz-timeline> -->

@@ -10,17 +10,7 @@ export class MyItinerariesComponent {
   @Input() itinerary!: ItineraryItem[] | null;
   @Input() currency!: string | undefined;
 
-  colour: string = '';
-  identifyItins(index: number, itins: ItineraryItem) {
-    return itins.name;
-  }
-
-  setColourtag(itin: ItineraryItem) {
-    if (itin.tag === 'Travel') {
-      this.colour = 'blue';
-    } else {
-      this.colour = 'green';
-    }
-    return this.colour;
+  identifyItins(index: number, itin: ItineraryItem) {
+    return itin.name;
   }
 }

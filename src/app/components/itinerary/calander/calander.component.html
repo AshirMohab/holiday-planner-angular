@@ -1,10 +1,16 @@
 <div class="grid grid-cols-2 gap-10 bg-white rounded-lg">
   <nz-calendar>
-    <ul *nzDateCell="let date" class="events">
-      <ng-container>
-        <li *ngFor="let itin of itinerary">
-          <nz-badge [nzStatus]="itin.tag" [nzText]="itin.notes"></nz-badge>
-        </li>
+    <ul *nzDateCell="let date">
+      <ng-container *ngFor="let itin of itinerary; trackBy: identifyItins">
+        <ng-container
+          *ngIf="
+            (itin.startDate | date: 'shortDate') === (date | date: 'shortDate')
+          "
+        >
+          <li>
+            {{ itin.name }}
+          </li>
+        </ng-container>
       </ng-container>
     </ul>
   </nz-calendar>

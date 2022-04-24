@@ -19,13 +19,6 @@ export class CalanderComponent implements OnInit {
     return itins.name;
   }
 
-  getMonthData(date: Date): number | null {
-    if (date.getMonth() === 8) {
-      return 1394;
-    }
-    return null;
-  }
-
   setColourtag(itin: ItineraryItem) {
     if (itin.tag === 'Travel') {
       this.colour = 'blue';
@@ -33,5 +26,9 @@ export class CalanderComponent implements OnInit {
       this.colour = 'green';
     }
     return this.colour;
+  }
+
+  setDate(date: Date) {
+    console.log(date);
   }
 }

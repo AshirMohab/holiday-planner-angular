@@ -1,17 +1,10 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, user } from '@angular/fire/auth';
-import { authInstanceFactory } from '@angular/fire/auth/auth.module';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
-import { Observable, of, switchMap } from 'rxjs';
 import User from '../models/user';
 import { Router } from '@angular/router';
 import { doc, Firestore, setDoc } from '@angular/fire/firestore';
-import { setUpUser } from '../shared/setUp';
 import { Store } from '@ngrx/store';
 import { UserState } from '../store/user/user.reducer';
 import { setCurrenctUser } from '../store/user/user.actions';

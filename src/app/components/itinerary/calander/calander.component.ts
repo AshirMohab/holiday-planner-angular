@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import ItineraryItem from 'src/app/models/itineraryItem';
-import TripsModel from 'src/app/models/tripsModel';
 
 @Component({
   selector: 'app-calander',
@@ -26,9 +25,5 @@ export class CalanderComponent implements OnInit {
       this.colour = 'green';
     }
     return this.colour;
-  }
-
-  setDate(date: Date) {
-    console.log(date);
   }
 }

@@ -12,6 +12,7 @@
         <app-my-itineraries
           [itinerary]="selectedTrip?.itinerary || null"
           [currency]="selectedTrip?.currency"
+          [selectedTrip]="selectedTrip$ | async"
         ></app-my-itineraries>
       </ng-container>
     </nz-tab>

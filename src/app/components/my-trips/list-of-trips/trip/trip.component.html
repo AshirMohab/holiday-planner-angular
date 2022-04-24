@@ -9,10 +9,10 @@
       {{ trip.itinerary.length }} Itenaries
     </p>
     <div class="flex justify-around mt-5 items-center">
-      <p class="font-mono">
+      <p>
         {{ trip.description }}
       </p>
-      <p class="font-mono">
+      <p>
         {{ trip.currency }}
       </p>
     </div>
@@ -20,10 +20,10 @@
       <nz-button-group
         nzType="primary"
         type="submit"
-        class="text-white bg-blue-500 rounded-md w-auto h-10 form-button text-center"
+        class="text-white bg-red-300 rounded-md w-auto h-10 form-button text-center teritary-button text-4xl"
         (click)="removeTrip()"
       >
-        Remove Trip
+        <i nz-icon nzType="delete" nzTheme="outline"></i>
       </nz-button-group>
     </div>
   </div>

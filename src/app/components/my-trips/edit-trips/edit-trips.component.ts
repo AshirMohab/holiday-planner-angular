@@ -8,11 +8,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import TripsModel from 'src/app/models/tripsModel';
-import {
-  updateUserTrip,
-  removeUserTripByID,
-  removeUserTrip,
-} from 'src/app/store/trip/trip.actions';
+import { updateUserTrip } from 'src/app/store/trip/trip.actions';
 import { TripState } from 'src/app/store/trip/trip.reducer';
 import * as TripSelectors from 'src/app/store/trip/trip.selectors';
 import { ActivatedRoute } from '@angular/router';
@@ -34,11 +30,7 @@ export class EditTripsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private tripStore: Store<TripState>,
     private route: ActivatedRoute
-  ) {
-    this.route.queryParams.subscribe(
-      (params) => (this.selectedTripID = params?.['tripID'])
-    );
-  }
+  ) {}
 
   ngOnInit(): void {
     this.initForm();

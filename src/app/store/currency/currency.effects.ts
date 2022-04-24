@@ -21,7 +21,7 @@ export class CurrencyEffects {
           ),
           catchError((error) => {
             this.notificationService.error(
-              'Unable to remove itinerary item from trip.',
+              'Unable to get the currencies from the currency API.',
               error.toString(),
               { nzDuration: 0 }
             );

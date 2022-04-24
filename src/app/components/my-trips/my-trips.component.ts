@@ -20,13 +20,13 @@ export class MyTripsComponent implements OnInit {
   selectedTrip$!: Observable<TripsModel>;
   user: User = JSON.parse(localStorage.getItem('user')!);
 
-  constructor(private stateStore: Store<TripState>) {}
+  constructor(private tripStore: Store<TripState>) {}
 
   ngOnInit(): void {
-    this.myTripsResponse$ = this.stateStore.pipe(
+    this.myTripsResponse$ = this.tripStore.pipe(
       select(TripSelectors.selectUserTrips)
     );
-    this.selectedTrip$ = this.stateStore.pipe(
+    this.selectedTrip$ = this.tripStore.pipe(
       select(TripSelectors.selectSelectedUserTrip)
     );
   }

@@ -1,4 +1,10 @@
 <div class="md:flex w-screen h-full justify-center py-20 sm:flex-col">
+  <nz-alert
+    *ngIf="isAdding"
+    nzType="success"
+    nzMessage="Itinerary has been added"
+  >
+  </nz-alert>
   <div
     class="md:grid md:grid-cols-1 md:w-[400px] bg-white h-fit rounded-lg divide-x-[1px] divide-blue-600 place-items-center mx-40 my-20 sm:w-[200px] sm:mx-20 sm:my-10 sm:flex-wrap"
   >

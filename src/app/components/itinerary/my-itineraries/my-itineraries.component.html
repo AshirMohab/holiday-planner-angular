@@ -1,4 +1,4 @@
-<div
+<!-- <div
   class="md:grid md:grid-cols-2 md:grid-rows-2 m-3 gap-3 sm:flex-col sm:grid-cols-1"
 >
   <div
@@ -26,4 +26,30 @@
       </p>
     </div>
   </div>
-</div>
+</div> -->
+
+<nz-timeline
+  *ngFor="let itin of itinerary; trackBy: identifyItins"
+  class="sm:flex-col"
+>
+  <nz-timeline-item>
+    <p class="text-base text-colour">
+      {{ itin.name }}
+    </p>
+    <p class="text-base text-colour mt-2">
+      {{ currency }} {{ itin.costEstimate }}
+    </p>
+    <p class="font-mono">
+      {{ itin.notes }}
+    </p>
+    <p class="font-mono">
+      {{ itin.startDate }}
+    </p>
+    <p class="font-mono">
+      {{ itin.endDate }}
+    </p>
+    <nz-tag [nzColor]="setColourtag(itin)" class="font-mono">
+      {{ itin.tag }}
+    </nz-tag>
+  </nz-timeline-item>
+</nz-timeline>

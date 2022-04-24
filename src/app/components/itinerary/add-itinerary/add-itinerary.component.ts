@@ -14,6 +14,7 @@ import { TripState } from 'src/app/store/trip/trip.reducer';
 export class AddItineraryComponent implements OnInit {
   addItineraryForm!: FormGroup;
   @Input() selectedTrip!: TripsModel | null;
+  isAdding: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -59,6 +60,7 @@ export class AddItineraryComponent implements OnInit {
         itinerary: [...this.selectedTrip.itinerary, newTripItinerary],
       };
       this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));
+      this.isAdding = true;
     }
   }
 }

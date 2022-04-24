@@ -13,11 +13,10 @@ export class CurrencyEffects {
     return this.actions$.pipe(
       ofType(CurrencyActions.getCurrencyRates),
       concatMap(() =>
-        /** An EMPTY observable only emits completion. Replace with your own observable API request */
         this.currencyService.getCurrency().pipe(
           map((currency) =>
             CurrencyActions.getCurrencyRatesCompleted({
-              currencyRates: currency?.data,
+              currencyRates: currency?.data.currencyData,
             })
           ),
           catchError((error) => {

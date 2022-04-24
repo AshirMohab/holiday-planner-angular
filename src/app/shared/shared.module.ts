@@ -17,6 +17,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 @NgModule({
   declarations: [],
@@ -40,6 +41,7 @@ import { NzTimelineModule } from 'ng-zorro-antd/timeline';
     NzTagModule,
     NzSpinModule,
     NzTimelineModule,
+    NzAlertModule,
   ],
   exports: [
     FormsModule,
@@ -60,6 +62,7 @@ import { NzTimelineModule } from 'ng-zorro-antd/timeline';
     NzTagModule,
     NzSpinModule,
     NzTimelineModule,
+    NzAlertModule,
   ],
 })
 export class SharedModule {}

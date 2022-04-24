@@ -1,12 +1,16 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as CurrencyActions from './currency.actions';
-import { CurrencyType, CurrencyData } from 'src/app/models/currency';
+import {
+  CurrencyType,
+  CurrencyData,
+  CurrencyResponse,
+} from 'src/app/models/currency';
 
 export const currencyFeatureKey = 'currency';
 
 export interface CurrencyState {
   isLoading: boolean;
-  currencyRates: CurrencyType | null;
+  currencyRates: CurrencyData | null;
   selectedCurrency: CurrencyData;
 }
 

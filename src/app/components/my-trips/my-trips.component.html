@@ -1,7 +1,7 @@
 <nz-content>
   <div class="grid grid-cols-1 flex-wrap flex-col p-3 m-4">
-    <nz-tabset>
-      <nz-tab nzTitle="My Trips">
+    <nz-tabset class="rounded-xl" nzType="card">
+      <nz-tab nzTitle="My Trips" aria-valuetext="My Trips">
         <ng-container>
           <app-list-of-trips
             [trips]="myTripsResponse$ | async"
@@ -13,14 +13,21 @@
           <app-add-trips></app-add-trips>
         </ng-container>
       </nz-tab>
-      <nz-tab nzTitle="Edit Selected Trip">
+      <nz-tab
+        nzTitle="Edit Selected Trip"
+        nzDisabled="{{ !(selectedTrip$ | async)?.tripID }}"
+      >
         <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
           <app-edit-trips
             [selectedTrip]="selectedTrip$ | async"
           ></app-edit-trips>
         </ng-container>
       </nz-tab>
-      <nz-tab nzTitle="View Selected Trip itinerary">
+      <nz-tab
+        nzTitle="View Selected Trip itinerary"
+        nzDisabled="{{ !(selectedTrip$ | async)?.tripID }}"
+        class="bg-blue-300"
+      >
         <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
           <app-itinerary [selectedTrip]="selectedTrip$ | async"></app-itinerary>
         </ng-container>

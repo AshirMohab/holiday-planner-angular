@@ -1,8 +1,8 @@
-<div
+<!-- <div
   class="md:grid md:grid-cols-2 md:grid-rows-2 m-3 gap-3 sm:flex-col sm:grid-cols-1"
 >
   <div
-    class="h-50 bg-slate-100 rounded-md p-5 hover:shadow-2xl hover:scale-105 duration-500 px-5"
+    class="h-60 bg-white rounded-md p-5 hover:shadow-2xl hover:scale-105 duration-500 px-5"
     *ngFor="let itins of itinerary"
   >
     <p class="text-base text-colour">
@@ -12,6 +12,9 @@
       {{ currency }} {{ itins.costEstimate }}
     </p>
     <div class="flex justify-around mt-5 items-center">
+      <nz-tag [nzColor]="'blue'" class="font-mono">
+        {{ itins.tag }}
+      </nz-tag>
       <p class="font-mono">
         {{ itins.notes }}
       </p>
@@ -23,4 +26,30 @@
       </p>
     </div>
   </div>
-</div>
+</div> -->
+
+<nz-timeline
+  *ngFor="let itin of itinerary; trackBy: identifyItins"
+  class="sm:flex-col"
+>
+  <nz-timeline-item>
+    <p class="text-base text-colour">
+      {{ itin.name }}
+    </p>
+    <p class="text-base text-colour mt-2">
+      {{ currency }} {{ itin.costEstimate }}
+    </p>
+    <p class="font-mono">
+      {{ itin.notes }}
+    </p>
+    <p class="font-mono">
+      {{ itin.startDate }}
+    </p>
+    <p class="font-mono">
+      {{ itin.endDate }}
+    </p>
+    <nz-tag [nzColor]="setColourtag(itin)" class="font-mono">
+      {{ itin.tag }}
+    </nz-tag>
+  </nz-timeline-item>
+</nz-timeline>

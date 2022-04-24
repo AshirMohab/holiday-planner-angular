@@ -17,6 +17,7 @@ export class AddTripsComponent implements OnInit {
   addTripForm!: FormGroup;
   addTripResponse$!: Observable<TripsModel>;
   @Input() currencyRates!: CurrencyData;
+  isAdding: boolean = false;
 
   user: User = JSON.parse(localStorage.getItem('user')!);
 
@@ -56,5 +57,6 @@ export class AddTripsComponent implements OnInit {
       itinerary: [],
     };
     this.tripStore.dispatch(addUserTrip({ newTrip }));
+    this.isAdding = true;
   }
 }

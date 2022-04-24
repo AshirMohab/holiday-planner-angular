@@ -1,6 +1,8 @@
-<div class="md:flex hidden w-screen h-full justify-center py-20">
+<nz-alert *ngIf="isEditting" nzType="success" nzMessage="Trip has been added">
+</nz-alert>
+<div class="md:flex w-screen h-full justify-center py-20">
   <div
-    class="grid grid-cols-1 w-[400px] bg-slate-100 h-fit rounded-lg divide-x-[1px] divide-dark-blue place-items-center mx-40 my-20"
+    class="grid grid-cols-1 w-[400px] bg-white h-fit rounded-lg divide-x-[1px] divide-dark-blue place-items-center mx-40 my-20"
   >
     <div class="p-5 gap-4">
       <h1 class="text-center text-xl">Edit Trip</h1>

@@ -28,6 +28,7 @@ export class EditTripsComponent implements OnInit {
   @Input() selectedTrip!: TripsModel | null;
   selectedTrip$!: Observable<TripsModel>;
   selectedTripID = '';
+  isEditting: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -77,5 +78,6 @@ export class EditTripsComponent implements OnInit {
     };
 
     this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));
+    this.isEditting = true;
   }
 }

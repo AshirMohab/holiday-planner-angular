@@ -1,5 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import ItineraryItem from 'src/app/models/itineraryItem';
+import TripsModel from 'src/app/models/tripsModel';
+import { updateUserTrip } from 'src/app/store/trip/trip.actions';
+import { TripState } from 'src/app/store/trip/trip.reducer';
+import * as TripSelectors from 'src/app/store/trip/trip.selectors';
 
 @Component({
   selector: 'app-my-itineraries',
@@ -9,8 +15,12 @@ import ItineraryItem from 'src/app/models/itineraryItem';
 export class MyItinerariesComponent {
   @Input() itinerary!: ItineraryItem[] | null;
   @Input() currency!: string | undefined;
+  @Input() selectedTrip!: TripsModel | null;
 
   colour: string = '';
+  isDeleting: boolean = false;
+
+  constructor(private tripStore: Store<TripState>) {}
 
   identifyItins(index: number, itin: ItineraryItem) {
     return itin.name;
@@ -23,5 +33,20 @@ export class MyItinerariesComponent {
       this.colour = 'green';
     }
     return this.colour;
+  }
+
+  removeItinerary(itin: ItineraryItem) {
+    const filtered = this.itinerary?.filter(function (value, index, itinArray) {
+      return value !== itin;
+    });
+
+    if (this.selectedTrip && filtered) {
+      const newTrip: TripsModel = {
+        ...this.selectedTrip,
+        itinerary: filtered,
+      };
+      this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));
+      this.isDeleting = true;
+    }
   }
 }

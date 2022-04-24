@@ -1,10 +1,4 @@
-import {
-  createAction,
-  createFeatureSelector,
-  createSelector,
-  props,
-} from '@ngrx/store';
-import { CurrencyData, CurrencyType } from 'src/app/models/currency';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromCurrency from './currency.reducer';
 
 export const selectCurrencyState =

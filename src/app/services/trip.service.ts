@@ -5,8 +5,6 @@ import {
   DocumentChangeAction,
   DocumentReference,
 } from '@angular/fire/compat/firestore';
-import { Firestore } from '@angular/fire/firestore';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { EMPTY, from, map, mergeMap, Observable } from 'rxjs';
 import ItineraryItem from '../models/itineraryItem';
 import TripsModel from '../models/tripsModel';
@@ -17,9 +15,7 @@ import TripsModel from '../models/tripsModel';
 export class TripService {
   constructor(
     private angularFireStore: AngularFirestore,
-    private fireStore: Firestore,
-    private angularFireAuth: AngularFireAuth,
-    private notificationService: NzNotificationService
+    private angularFireAuth: AngularFireAuth
   ) {}
 
   addUserTrip(newTrip: TripsModel): Observable<DocumentReference<TripsModel>> {

@@ -1,9 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {
-  CurrencyData,
-  CurrencyResponse,
-  CurrencyType,
-} from 'src/app/models/currency';
+import { CurrencyData } from 'src/app/models/currency';
 
 export const getCurrencyRates = createAction('[Currency] getCurrencyRates');
 

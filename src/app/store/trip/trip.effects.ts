@@ -7,7 +7,7 @@ import {
   withLatestFrom,
   first,
 } from 'rxjs/operators';
-import { Observable, EMPTY, of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 
 import * as TripActions from './trip.actions';
 import { NzNotificationService } from 'ng-zorro-antd/notification';

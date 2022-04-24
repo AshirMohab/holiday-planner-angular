@@ -4,7 +4,7 @@ export interface CurrencyResponse {
 }
 
 export interface CurrencyType {
-  CurrencyData: CurrencyData;
+  currencyData: CurrencyData;
   AFN: CurrencyData;
   ALL: CurrencyData;
   AMD: CurrencyData;

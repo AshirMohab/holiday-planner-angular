@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditDetailsComponent } from './edit-details.component';
+import { LazyComponent } from './lazy.component';
 
-describe('EditDetailsComponent', () => {
-  let component: EditDetailsComponent;
-  let fixture: ComponentFixture<EditDetailsComponent>;
+describe('LazyComponent', () => {
+  let component: LazyComponent;
+  let fixture: ComponentFixture<LazyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditDetailsComponent ]
+      declarations: [ LazyComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditDetailsComponent);
+    fixture = TestBed.createComponent(LazyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

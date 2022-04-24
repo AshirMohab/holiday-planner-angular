@@ -1,1 +1,27 @@
-<app-add-itinerary></app-add-itinerary>
+<div class="grid grid-cols-1 flex-wrap flex-col p-3 m-4 sm:flex-col">
+  <nz-tabset nzType="card">
+    <nz-tab nzTitle="Selected Trips Calender">
+      <ng-container *ngIf="selectedTrip$">
+        <app-calander
+          [itinerary]="selectedTrip?.itinerary || null"
+        ></app-calander>
+      </ng-container>
+    </nz-tab>
+    <nz-tab nzTitle="Itinerary Items of selected Trip">
+      <ng-container>
+        <app-my-itineraries
+          [itinerary]="selectedTrip?.itinerary || null"
+          [currency]="selectedTrip?.currency"
+          [selectedTrip]="selectedTrip$ | async"
+        ></app-my-itineraries>
+      </ng-container>
+    </nz-tab>
+    <nz-tab nzTitle="Add itinerary">
+      <ng-container *ngIf="selectedTrip?.tripID">
+        <app-add-itinerary
+          [selectedTrip]="selectedTrip$ | async"
+        ></app-add-itinerary>
+      </ng-container>
+    </nz-tab>
+  </nz-tabset>
+</div>

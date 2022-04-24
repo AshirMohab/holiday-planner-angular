@@ -8,12 +8,14 @@ export interface TripState {
   isLoading: boolean;
   selectedUserTrip: TripsModel;
   userTrips: TripsModel[];
+  newTrip: TripsModel;
 }
 
 export const initialState: TripState = {
   isLoading: false,
   selectedUserTrip: {
     tripID: '',
+    userID: '',
     currency: '',
     description: '',
     itinerary: [],
@@ -21,6 +23,15 @@ export const initialState: TripState = {
     userEmail: '',
   },
   userTrips: [],
+  newTrip: {
+    tripID: '',
+    userID: '',
+    currency: '',
+    description: '',
+    itinerary: [],
+    name: '',
+    userEmail: '',
+  },
 };
 
 export const reducer = createReducer(

@@ -1,24 +1,39 @@
-<div class="grid grid-cols-1 flex-wrap flex-col">
-  <button
-    class="text-white bg-blue-500 rounded-md w-full h-10 primary-button"
-    (click)="isShowingTrips = !isShowingTrips"
-  >
-    {{ isShowingTrips ? "Hide" : "Show " }} Trips
-  </button>
-  <button
-    class="text-white bg-green-500 rounded-md w-full h-10 secondary-button"
-    (click)="addingTrip = !addingTrip"
-  >
-    {{ addingTrip ? "Hide" : "Show " }} Add trip
-  </button>
-
-  <ng-container *ngIf="isShowingTrips">
-    <app-list-of-trips [trips]="myTripsResponse$ | async"></app-list-of-trips>
-  </ng-container>
-
-  <ng-container *ngIf="addingTrip">
-    <app-add-trips></app-add-trips>
-  </ng-container>
-
-  <!-- <app-edit-trips [selectedTrip]="selectedTrip$ | async"></app-edit-trips> -->
-</div>
+<nz-content>
+  <div class="grid grid-cols-1 flex-wrap flex-col p-3 m-4">
+    <nz-tabset class="rounded-xl" nzType="card">
+      <nz-tab nzTitle="My Trips" aria-valuetext="My Trips">
+        <ng-container>
+          <app-list-of-trips
+            [trips]="myTripsResponse$ | async"
+          ></app-list-of-trips>
+        </ng-container>
+      </nz-tab>
+      <nz-tab nzTitle="Add Trip">
+        <ng-container>
+          <app-add-trips></app-add-trips>
+        </ng-container>
+      </nz-tab>
+      <nz-tab
+        nzTitle="Edit Selected Trip"
+        nzDisabled="{{ !(selectedTrip$ | async)?.tripID }}"
+      >
+        <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
+          <app-edit-trips
+            [selectedTrip]="selectedTrip$ | async"
+          ></app-edit-trips>
+        </ng-container>
+      </nz-tab>
+      <nz-tab
+        nzTitle="View Selected Trip itinerary"
+        nzDisabled="{{ !(selectedTrip$ | async)?.tripID }}"
+        class="bg-blue-300"
+      >
+        <ng-container *ngIf="(selectedTrip$ | async)?.tripID">
+          <app-itinerary [selectedTrip]="selectedTrip$ | async"></app-itinerary>
+        </ng-container>
+      </nz-tab>
+      >
+    </nz-tabset>
+  </div>
+  <router-outlet></router-outlet>
+</nz-content>

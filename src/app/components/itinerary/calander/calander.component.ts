@@ -7,20 +7,23 @@ import ItineraryItem from 'src/app/models/itineraryItem';
   styleUrls: ['./calander.component.scss'],
 })
 export class CalanderComponent implements OnInit {
-  @Input() itineraries!: ItineraryItem[];
-  @Input() tripStartDate!: Date;
-  @Input() tripEndDate!: Date;
-
-  startDate: Date = new Date();
-  endDate: Date = new Date();
-  chosenDate: Date = new Date();
+  @Input() itinerary!: ItineraryItem[] | null;
   constructor() {}
 
-  ngOnInit(): void {
-    if (this.tripStartDate && this.tripEndDate) {
-      this.startDate = new Date(this.tripStartDate);
-      this.endDate = new Date(this.tripEndDate);
-      this.chosenDate = this.startDate;
+  ngOnInit(): void {}
+
+  colour: string = '';
+
+  identifyItins(index: number, itins: ItineraryItem) {
+    return itins.name;
+  }
+
+  setColourtag(itin: ItineraryItem) {
+    if (itin.tag === 'Travel') {
+      this.colour = 'blue';
+    } else {
+      this.colour = 'green';
     }
+    return this.colour;
   }
 }

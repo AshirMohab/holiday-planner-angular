@@ -1,6 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 import TripsModel from 'src/app/models/tripsModel';
 
+export const addUserTrip = createAction(
+  '[Trip] addUserTrip',
+  props<{ newTrip: TripsModel }>()
+);
+
 export const getUserTrips = createAction('[Trip] getUserTrips');
 
 export const getUserTripsCompleted = createAction(
@@ -13,8 +18,28 @@ export const setSelectedUserTrip = createAction(
   props<{ selectedUserTrip: TripsModel }>()
 );
 
-export const updateTrip = createAction(
-  '[Trip] updateTrip',
+export const updateUserTrip = createAction(
+  '[Trip] updateUserTrip',
+  props<{ trip: TripsModel }>()
+);
+
+export const updateUserTripById = createAction(
+  '[Trip] updateUserTripById',
+  props<{ trip: TripsModel; tripDBId: string }>()
+);
+
+export const removeUserTrip = createAction(
+  '[Trip] removeUserTrip',
+  props<{ trip: TripsModel }>()
+);
+
+export const removeUserTripByID = createAction(
+  '[Trip] removeUserTripByID',
+  props<{ trip: TripsModel; tripID: string }>()
+);
+
+export const removeTripItinerary = createAction(
+  '[Trip] removeTripItinerary',
   props<{ trip: TripsModel }>()
 );
 // export const getUserTripsCompleted = createAction(

@@ -4,12 +4,19 @@
 >
   <h1 class="text-xl text-center text-blue-600 mt-2 mb-3">Your trips</h1>
   <hr class="border-blue-600" />
-  <div class="grid grid-cols-3 gap-4 h-[735px] overflow-x-auto p-5">
-    <app-trip *ngFor="let trip of trips" [trip]="trip"></app-trip>
+  <div
+    class="md:grid md:grid-cols-3 gap-12 h-auto overflow-x-auto p-5 sm:grid sm:grid-cols-1 flew-wrap"
+  >
+    <app-trip
+      *ngFor="let trip of trips; trackBy: identifyTrips"
+      [trip]="trip"
+    ></app-trip>
   </div>
 </div>
-<div *ngIf="!trips?.length">
-  <h1 class="text-2xl text-center text-blue-600 mt-2 mb-3">
-    No trips have been planned
-  </h1>
-</div>
+<nz-spin [nzSize]="'large'" *ngIf="!trips?.length">
+  <div>
+    <h1 class="text-2xl text-center text-blue-600 mt-2 mb-3">
+      No trips have been planned
+    </h1>
+  </div>
+</nz-spin>

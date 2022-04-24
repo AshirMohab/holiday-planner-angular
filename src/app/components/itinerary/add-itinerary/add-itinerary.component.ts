@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import ItineraryItem from 'src/app/models/itineraryItem';
-import { TripService } from 'src/app/services/trip.service';
-import { UserService } from 'src/app/services/user.service';
+import TripsModel from 'src/app/models/tripsModel';
+import { updateUserTrip } from 'src/app/store/trip/trip.actions';
+import { TripState } from 'src/app/store/trip/trip.reducer';
 
 @Component({
   selector: 'app-add-itinerary',
@@ -11,10 +13,12 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddItineraryComponent implements OnInit {
   addItineraryForm!: FormGroup;
+  @Input() selectedTrip!: TripsModel | null;
+  isAdding: boolean = false;
 
   constructor(
-    private tripService: TripService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private tripStore: Store<TripState>
   ) {}
 
   ngOnInit(): void {
@@ -42,13 +46,21 @@ export class AddItineraryComponent implements OnInit {
   }
 
   addItinerary() {
-    const itinerary: ItineraryItem = {
+    const newTripItinerary: ItineraryItem = {
       name: this.addItineraryForm.value.name,
       tag: this.addItineraryForm.value.tag,
       startDate: this.addItineraryForm.value.startDate,
       endDate: this.addItineraryForm.value.endDate,
       costEstimate: this.addItineraryForm.value.cost,
     };
-    this.tripService.addTripItinerary(itinerary);
+
+    if (this.selectedTrip) {
+      const newTrip: TripsModel = {
+        ...this.selectedTrip,
+        itinerary: [...this.selectedTrip.itinerary, newTripItinerary],
+      };
+      this.tripStore.dispatch(updateUserTrip({ trip: newTrip }));
+      this.isAdding = true;
+    }
   }
 }
